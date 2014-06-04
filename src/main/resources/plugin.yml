@@ -1,0 +1,27 @@
+    name: EffectManagerPlugin
+    main: com.github.n0ct.effectmanagerplugin.EffectManagerPlugin
+    version: 2.0.0-SNAPSHOT
+    description: To put strange useless effects on players
+    author: n0ct
+    commands:
+      em:
+        description: To put strange useless effects on players.
+        usage: /em list|player|effect|info|help|call
+      eminfo:
+        description: Retrieves informations on an existing effect.
+        usage: /eminfo [<effectName>|<playerName>]
+      emplayer:
+        description: Manages the effects associated to a player.
+        usage: /emplayer add|del|clear|details|list
+      emeffect:
+        description: Manages effects definition.
+        usage: /emeffect classes|help|list|details|add|del
+      emcall:
+        description: Call an effect directly
+        usage: /emcall [<playerName> <effectName> | ( <playerName> | <effectName> )]
+      emhelp:
+        description: Retrieves informations about how to use that plugin.
+        usage: /emhelp <command>
+      emlist:
+        description: Retrieves a list of effect or a list of effect applied to a player
+        usage: /emlist [player]

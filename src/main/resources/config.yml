@@ -1,0 +1,60 @@
+effects:
+  growCrops:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growCrops
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CROPS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: DIRT
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: SOIL
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+playersEffects:
+  bZx_: growCrops
