@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang.IllegalClassException;
 
+import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
 import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEventListener;
 
 public class EventListenerManager {
@@ -15,9 +16,9 @@ public class EventListenerManager {
 	
 	private Map<String, AbstractEventListener<?>> eventListeners;
 
-	public EventListenerManager(PlayerEffectManager playerEffectManager) {
+	public EventListenerManager() {
 		eventListeners = new TreeMap<String,AbstractEventListener<?>>();
-		this.playerEffectManager = playerEffectManager;
+		this.playerEffectManager = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class).getPlayerEffectManager();
 	}
 	
 	public AbstractEventListener<?> getEventListener(Class<? extends AbstractEventListener<?>> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {

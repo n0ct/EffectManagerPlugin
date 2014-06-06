@@ -2,23 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.n0ct.effectmanagerplugin</groupId>
   <artifactId>EffectManagerPlugin</artifactId>
-  <version>2.1.0</version>
+  <version>2.1.1</version>
   <build>
       <plugins>
-<!--           <plugin> -->
-<!--               <groupId>org.apache.maven.plugins</groupId> -->
-<!--               <artifactId>maven-compiler-plugin</artifactId> -->
-<!--               <configuration> -->
-<!--                   <source>1.7</source> -->
-<!--                   <target>1.7</target> -->
-<!--               </configuration> -->
-<!--           </plugin> -->
           <plugin>
               <artifactId>maven-assembly-plugin</artifactId>
               <configuration>
                   <archive>
                       <manifest>
-                          <mainClass>fully.qualified.MainClass</mainClass>
+                          <mainClass>org.bukkit.craftbukkit.Main</mainClass>
                       </manifest>
                   </archive>
                   <descriptorRefs>
@@ -35,33 +27,6 @@
                   </execution>
               </executions>
           </plugin>
-          <!-- <plugin>
-              <artifactId>maven-dependency-plugin</artifactId>
-              <version>2.1</version>
-              <configuration>
-                  <outputFilterFile>true</outputFilterFile>
-                  <outputFile>${project.build.directory}/classpath.properties</outputFile>
-              </configuration>
-          </plugin> -->
-<!--           <plugin> -->
-<!--               <groupId>org.apache.maven.plugins</groupId> -->
-<!--               <artifactId>maven-jar-plugin</artifactId> -->
-<!--               <configuration> -->
-<!--                   <archive> -->
-<!-- 		              <manifest> -->
-<!-- 			              <addDefaultImplementationEntries>true</addDefaultImplementationEntries> -->
-<!-- 			              <addClasspath>true</addClasspath> -->
-<!-- 			              <mainClass>com.github.n0ct.effectmanager.EffectManagerPlugin</mainClass> -->
-<!-- 		              </manifest> -->
-<!-- 		              <manifestEntries> -->
-<!-- 			              <Class-Path>org.reflections</Class-Path> -->
-<!-- 		              </manifestEntries> -->
-<!--                   </archive> -->
-<!--                   <descriptorRefs> -->
-<!--                       <descriptorRef>jar-with-dependencies</descriptorRef> -->
-<!--                   </descriptorRefs> -->
-<!--               </configuration> -->
-<!--           </plugin> -->
           <plugin>
 		    <groupId>com.github.goldin</groupId>
 		    <artifactId>copy-maven-plugin</artifactId>

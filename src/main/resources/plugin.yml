@@ -1,6 +1,6 @@
     name: EffectManagerPlugin
     main: com.github.n0ct.effectmanagerplugin.EffectManagerPlugin
-    version: 2.0.0-SNAPSHOT
+    version: 2.1.1
     description: To put strange useless effects on players
     author: n0ct
     commands:

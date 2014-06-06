@@ -156,8 +156,10 @@ public class EffectManager implements ConfigurationSerializable {
 
 	public void clear() {
 		Set<String> players = effects.keySet();
-		for (String player : players) {
-			this.remove(player);
+		String[] playersArray = new String[players.size()];
+		players.toArray(playersArray);
+		for(int i =0;i<playersArray.length; i++) {
+			this.remove(playersArray[i]);
 		}
 	}
 }

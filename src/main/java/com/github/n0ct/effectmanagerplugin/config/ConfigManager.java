@@ -2,6 +2,7 @@ package com.github.n0ct.effectmanagerplugin.config;
 
 import java.util.Map;
 
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
@@ -28,14 +29,23 @@ public class ConfigManager {
 
 	@SuppressWarnings("unchecked")
 	private void loadEffects(FileConfiguration fileConfig) {
-		Map<String, Object> map = (Map<String, Object>) fileConfig.get("effects");
-		plugin.setEffectManager(EffectManager.deserialize(map));
+		Object obj = fileConfig.get("effects");
+		if (obj instanceof MemorySection) {
+			plugin.setEffectManager(EffectManager.deserialize(((MemorySection)obj).getValues(true)));
+		} else {
+			plugin.setEffectManager(EffectManager.deserialize((Map<String, Object>) obj));
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void loadPlayersEffects(FileConfiguration fileConfig) {
-		Map<String, Object> map = (Map<String, Object>) fileConfig.get("playersEffects");
-		plugin.setPlayerEffectManager(PlayerEffectManager.deserialize(map));
+		Object obj = fileConfig.get("playersEffects");
+		if (obj instanceof MemorySection) {
+			plugin.setPlayerEffectManager(PlayerEffectManager.deserialize(((MemorySection)obj).getValues(true)));
+			
+		} else {
+			plugin.setPlayerEffectManager(PlayerEffectManager.deserialize((Map<String, Object>) obj));
+		}
 	}
 
 

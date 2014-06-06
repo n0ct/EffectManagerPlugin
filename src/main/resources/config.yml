@@ -1,4 +1,199 @@
 effects:
+  batman:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.SimplePathEntityEffect
+    name: batman
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Simple Path Entity Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        amplifier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '2'
+          description: The number of entity spawned.
+          maxValue: '20'
+          minValue: '1'
+          name: amplifier
+          optionnal: true
+          uniqueName: amplifier
+          value: '20'
+        entityType:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.EntityTypeEffectParameter
+          defaultValue: BAT
+          description: The type of the entity spawning behind player's steps.
+          name: entity
+          optionnal: true
+          uniqueName: entityType
+          value: BAT
+      splitSeparator: ' '
+      uniqueName: params
+  chicken:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.SimplePathEntityEffect
+    name: chicken
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Simple Path Entity Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        amplifier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '2'
+          description: The number of entity spawned.
+          maxValue: '20'
+          minValue: '1'
+          name: amplifier
+          optionnal: true
+          uniqueName: amplifier
+          value: '20'
+        entityType:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.EntityTypeEffectParameter
+          defaultValue: BAT
+          description: The type of the entity spawning behind player's steps.
+          name: entity
+          optionnal: true
+          uniqueName: entityType
+          value: CHICKEN
+      splitSeparator: ' '
+      uniqueName: params
+  dropLog:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.dmgdrop.DropItemOnDamageEffect
+    name: dropLog
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Drop Item On Damage Parameters
+      maxNumberOfSubParams: 2
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        Amplifier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Number of items dropped each time the player takes damages.
+          maxValue: '200'
+          minValue: '1'
+          name: Amplifier
+          optionnal: true
+          uniqueName: Amplifier
+          value: '2'
+        item:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some items separated by ','.
+          maxNumberOfSubParams: 0
+          name: Items
+          optionnal: false
+          parameters:
+            item_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: WOOD
+              description: Item witch will be dropped.
+              name: Item
+              optionnal: true
+              uniqueName: item_0
+              value: LOG
+          splitSeparator: ','
+          uniqueName: item
+      splitSeparator: ' '
+      uniqueName: params
+  dropSponge:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.dmgdrop.DropItemOnDamageEffect
+    name: dropSponge
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Drop Item On Damage Parameters
+      maxNumberOfSubParams: 2
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        Amplifier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Number of items dropped each time the player takes damages.
+          maxValue: '200'
+          minValue: '1'
+          name: Amplifier
+          optionnal: true
+          uniqueName: Amplifier
+          value: '2'
+        item:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some items separated by ','.
+          maxNumberOfSubParams: 0
+          name: Items
+          optionnal: false
+          parameters:
+            item_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: WOOD
+              description: Item witch will be dropped.
+              name: Item
+              optionnal: true
+              uniqueName: item_0
+              value: SPONGE
+          splitSeparator: ','
+          uniqueName: item
+      splitSeparator: ' '
+      uniqueName: params
+  growCarrot:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growCarrot
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CROPS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: CARROT
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
   growCrops:
     className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
     name: growCrops
@@ -56,5 +251,339 @@ effects:
           value: '2'
       splitSeparator: ' '
       uniqueName: params
+  growMelon:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growMelon
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CROPS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: MELON_STEM
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+  growNetherWart:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growNetherWart
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: NETHER_WARTS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: SOUL_SAND
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+  growPotato:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growPotato
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CROPS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: POTATO
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+  growPumpkin:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growPumpkin
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CROPS
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: PUMPKIN_STEM
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+  growSugarCanes:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: growSugarCanes
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: SAND
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: SUGAR_CANE_BLOCK
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '2'
+      splitSeparator: ' '
+      uniqueName: params
+  spongePath:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.PathBlockEffect
+    name: spongePath
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 0
+          name: Blocks
+          optionnal: false
+          parameters:
+            block_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: GOLD_BLOCK
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: block_0
+              value: SPONGE
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '300'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '600'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '150'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '10'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '3'
+      splitSeparator: ' '
+      uniqueName: params
 playersEffects:
-  bZx_: growCrops
+  bZx_: batman

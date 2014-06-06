@@ -9,7 +9,6 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 	private static final String INDENTATION = "  ";
 
 
-	@SuppressWarnings("unchecked")
 	public AbstractPrimitiveEffectParameter(Map<String,Object> map){
 		super(map);
 		setValueFromString((String) map.get("value"));
@@ -20,7 +19,6 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 		T defaultValue = getFromString(string);
 		setDefaultValue(defaultValue);
 	}
-
 
 	@Override
 	public Map<String, Object> serialize() {

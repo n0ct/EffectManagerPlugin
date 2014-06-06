@@ -126,7 +126,7 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 	public EffectParameters getDefaultParameters() {
 		EffectParameters ret = new EffectParameters("effect Parameters","params","Path Block Effect Parameters", false, " ", 3);
 		EffectParameters paramBlocks = new EffectParameters("Blocks","blocks","Some blocks separated by ','.", false, ",", 2);
-		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "supportingblock", "Block witch will appear under players's steps.", true, Material.DIRT);
+		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "supportingblock", "Block witch will appear under players's steps.", true, Material.SOIL);
 		paramBlocks.addSubEffectParameter(block1);
 		MaterialEffectParameter block2 = new MaterialEffectParameter("Block", "growingblock", "Block where plants will grow.", true, Material.CROPS);
 		paramBlocks.addSubEffectParameter(block2);

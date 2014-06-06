@@ -70,7 +70,6 @@ public class EMCommandExecutor implements CommandExecutor {
 		plugin.getCommand(COMMAND + ListEffectCommandExecutor.COMMAND).setExecutor(this.listEffectCommandExecutor);
 	}
 	
-	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		
 		Player player = (Player)sender;

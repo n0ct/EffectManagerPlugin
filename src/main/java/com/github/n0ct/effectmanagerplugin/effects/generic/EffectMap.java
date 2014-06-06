@@ -3,6 +3,7 @@ package com.github.n0ct.effectmanagerplugin.effects.generic;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class EffectMap extends TreeMap<String,AbstractEffect> implements ConfigurationSerializable {
@@ -26,7 +27,13 @@ public class EffectMap extends TreeMap<String,AbstractEffect> implements Configu
 	public EffectMap(Map<String, Object> map) {
 		this();
 		for (String key : map.keySet()) {
-			put(key, AbstractEffect.deserialize((Map<String, Object>) map.get(key)));
+			Object obj = map.get(key);
+			if (obj instanceof MemorySection && !key.contains(".")) {
+				put(key, AbstractEffect.deserialize(((MemorySection) obj).getValues(true)));
+				
+			} else if (obj instanceof Map){
+				put(key, AbstractEffect.deserialize((Map<String, Object>) map.get(key)));
+			}
 		}
 	}
 

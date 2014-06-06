@@ -111,7 +111,7 @@ public abstract class AbstractEffectParameter implements ConfigurationSerializab
 		Class<? extends AbstractEffectParameter> effectParameterClass = null;
 		String effectParameterClassName = (String) map.get("className");
 		for(String curEffectParameterClassName : effectParametersClasses.keySet()) {
-			if (curEffectParameterClassName == effectParameterClassName) {
+			if (curEffectParameterClassName.equals(effectParameterClassName)) {
 				effectParameterClass = effectParametersClasses.get(curEffectParameterClassName);
 			}
 		}

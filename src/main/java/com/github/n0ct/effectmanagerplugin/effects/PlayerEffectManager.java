@@ -45,18 +45,18 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		return instance;
 	}
 	
-	public static PlayerEffectManager getFirstInstance(EffectManagerPlugin plugin,EffectManager effectManager) {
+	public static PlayerEffectManager getFirstInstance() {
 		if (instance != null) {
 			throw new IllegalAccessError("The PlayerEffectManager has already be initialised by the call of getFirstInstance method");
 		}
-		instance = new PlayerEffectManager(plugin,effectManager);
+		instance = new PlayerEffectManager();
 		return instance;
 	}
-	private PlayerEffectManager(EffectManagerPlugin plugin,EffectManager effectManager) {
-		this.plugin = plugin;
+	private PlayerEffectManager() {
+		this.plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
 		this.playersEffects = new TreeMap<String,List<AbstractEffect>>();
-		this.effectManager = effectManager;
-		this.eventListenerManager = new EventListenerManager(this);
+		this.effectManager = plugin.getEffectManager();
+		this.eventListenerManager = new EventListenerManager();
 	}
 
 	@Override
@@ -80,16 +80,12 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	}
 	
 	public PlayerEffectManager(Map<String, Object> map) {
-
-		this.plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
-		this.playersEffects = new TreeMap<String,List<AbstractEffect>>();
-		this.effectManager = plugin.getEffectManager();
-		this.eventListenerManager = new EventListenerManager(this);
+		this();
 		PlayerEffectManager.instance = this;
 		for (String playerName : map.keySet()) {
 			String[] playerEffects = ((String)map.get(playerName)).split(";");
 			for (int i = 0;i< playerEffects.length;i++) {
-				this.add(playerName, playerEffects[i]);
+				this.add(playerName, playerEffects[i],false);
 			}
 		}
 	}
@@ -113,12 +109,18 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		return new ArrayList<AbstractEffect>();
 	}
 	
-	public void add(String playerName, String effectName) throws IllegalArgumentException {
-		checkPlayer(playerName);
+	public void add(String playerName, String effectName) {
+		add(playerName,effectName,true);
+	}
+	
+	public void add(String playerName, String effectName, Boolean checkIfPlayerIsConnected) throws IllegalArgumentException {
+		if (checkIfPlayerIsConnected) {
+			checkPlayer(playerName);
+		}
 		checkEffect(effectName);
 		//verifie que ce type d'effet n'est pas deja attribue au joueur.
 		AbstractEffect effect = (AbstractEffect) this.effectManager.get(effectName);
-		checkEffectTypeDuplication(playerName,effect);
+		checkEffectTypeDuplication(playerName,effect,false);
 		//recupere et si necessaire cree le(s) eventListener(s) appropries
 		try {
 			effect = effect.applyToPlayer(playerName);
@@ -143,9 +145,10 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 
 		
 		//On rempli la map des effets du joueur avec le nouvel effet.
-		List<AbstractEffect> effects = getEffectsForPlayer(playerName);
-		effects.add(effect);
-		this.playersEffects.put(playerName, effects);
+		if (this.playersEffects.get(playerName) == null) {
+			this.playersEffects.put(playerName,new ArrayList<AbstractEffect>());
+		}
+		this.playersEffects.get(playerName).add(effect);
 	}
 	
 	public void registerEvents(AbstractEventListener<?> eventListener) {
@@ -226,8 +229,15 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		getEffectsForPlayer(playerName).remove(effect);;
 	}
 	
-	private void checkEffectTypeDuplication(String playerName, AbstractEffect effect) {
-		for (AbstractEffect cEffect : getEffectsForPlayer(playerName)) {
+	private void checkEffectTypeDuplication(String playerName, AbstractEffect effect, boolean checkIfPlayerExists) {
+		if (!playersEffects.containsKey(playerName)) {
+			return;
+		}
+		List<AbstractEffect> effects = playersEffects.get(playerName);
+		if (effects == null) {
+			return;
+		}
+		for (AbstractEffect cEffect : effects) {
 			if((cEffect.getType().equals(effect.getType()) && !effect.getType().isStackable())) {
 				throw new IllegalArgumentException("The effect "+cEffect.getName()+" of the same type ("+effect.getType().getName()+") is already associated to the player "+playerName+".");
 			}

@@ -9,7 +9,6 @@ import com.github.n0ct.effectmanagerplugin.effects.PlayerEffectManager;
 
 
 
-//TODO add an event listener and clear(playerName) lorsque le joueur se d�co.
 public class EffectManagerPlugin extends JavaPlugin{
 
 	private EffectManager effectManager;
@@ -34,11 +33,11 @@ public class EffectManagerPlugin extends JavaPlugin{
 	 */
 	@Override
     public void onEnable(){
+		this.saveDefaultConfig();
 		this.effectManager = new EffectManager(this);
-		this.playerEffectManager = PlayerEffectManager.getFirstInstance(this,effectManager);
+		this.playerEffectManager = PlayerEffectManager.getFirstInstance();
 		this.commandExecutor = new EMCommandExecutor(this); 
 		this.configManager = new ConfigManager(this);
-		this.saveDefaultConfig();
     	this.configManager.loadConfig();
 	}
 	
@@ -68,7 +67,7 @@ public class EffectManagerPlugin extends JavaPlugin{
 	public void setPlayerEffectManager(PlayerEffectManager deserializedPlayerEffectManager) {
 		this.playerEffectManager = deserializedPlayerEffectManager;
 	}
-
+	
 	public void setEffectManager(EffectManager deserializedEffectManager) {
 		this.effectManager = deserializedEffectManager;
 	}

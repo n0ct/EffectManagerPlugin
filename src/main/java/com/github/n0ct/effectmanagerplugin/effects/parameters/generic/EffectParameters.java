@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
+import org.bukkit.configuration.MemorySection;
 
 /**
  * @author Benjamin
@@ -16,7 +16,7 @@ import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
  */
 public class EffectParameters extends AbstractEffectParameter implements Cloneable {
 	
-	public final static String ITERATION_PARAMETER = ".";
+	public final static String ITERATION_PARAMETER = "_";
 	
 	ArrayList<AbstractEffectParameter> subParameters;
 	
@@ -35,9 +35,20 @@ public class EffectParameters extends AbstractEffectParameter implements Cloneab
 		this.splitSeparator = (String) map.get("splitSeparator");
 		this.maxNumberOfSubParams = (int) map.get("maxNumberOfSubParams");
 		this.subParameters = new ArrayList<AbstractEffectParameter>();
-		Map<String,Object> parameters = (Map<String, Object>) map.get("parameters");
+		Object obj = map.get("parameters");
+		Map<String,Object> parameters;
+		if (obj instanceof Map) {
+			parameters = (Map<String, Object>) map.get("parameters");
+		} else {
+			parameters = ((MemorySection) map.get("parameters")).getValues(true);
+		}
 		for (String key : parameters.keySet()) {
-			this.subParameters.add(AbstractEffectParameter.deserialize((Map<String, Object>) parameters.get(key)));
+			Object obj2 = parameters.get(key);
+			if (obj2 instanceof Map) {
+				this.subParameters.add(AbstractEffectParameter.deserialize((Map<String, Object>) parameters.get(key)));
+			} else if (parameters.get(key) instanceof MemorySection && !(key.contains("."))) {
+				this.subParameters.add(AbstractEffectParameter.deserialize(((MemorySection) parameters.get(key)).getValues(true)));
+			}
 		}
 	}
 	

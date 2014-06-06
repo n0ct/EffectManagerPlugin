@@ -3,7 +3,9 @@ package com.github.n0ct.effectmanagerplugin.effects.effects.bumpattacker;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -108,6 +110,10 @@ public class BumpAttackerEffect extends AbstractEffect {
 				@Override
 				public void run() {
 					{
+						if (entity instanceof Player) {
+							((Player)entity).playSound(entity.getLocation(), Sound.ARROW_HIT, 100, 100);
+						}
+						entity.playEffect(EntityEffect.HURT);
 						entity.setVelocity(entity.getVelocity().add(new Vector(velX,velY,velZ)));
 					}
 					

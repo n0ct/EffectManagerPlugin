@@ -10,6 +10,7 @@ import java.util.Observer;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -42,9 +43,14 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 		return map;
 	}
 	
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings("unchecked")
 	public AbstractEffect(Map<String,Object> map) {
-		this.effectParameter = EffectParameters.deserialize((Map<String, Object>) map.get("parameters"));
+		Object obj = map.get("parameters");
+		if (obj instanceof Map) {
+			this.effectParameter = EffectParameters.deserialize((Map<String, Object>) map.get("parameters"));
+		} else if (obj instanceof MemorySection) {
+			this.effectParameter = EffectParameters.deserialize(((MemorySection) map.get("parameters")).getValues(true));
+		}
 		this.name = (String) map.get("name");
 	}
 	
@@ -152,7 +158,7 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 		Class<? extends AbstractEffect> effectClass = null;
 		String effectClassName = (String) map.get("className");
 		for(String curEffectClassName : effectClasses.keySet()) {
-			if (curEffectClassName == effectClassName) {
+			if (curEffectClassName.equals(effectClassName)) {
 				effectClass = effectClasses.get(curEffectClassName);
 			}
 		}
