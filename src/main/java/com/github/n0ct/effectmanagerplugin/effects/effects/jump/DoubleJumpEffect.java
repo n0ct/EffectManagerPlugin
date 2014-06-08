@@ -9,7 +9,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
 import com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter;
-import com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
 
 public class DoubleJumpEffect extends AbstractJumpEffect {
