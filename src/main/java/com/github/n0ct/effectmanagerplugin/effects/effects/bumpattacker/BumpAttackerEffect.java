@@ -2,6 +2,7 @@ package com.github.n0ct.effectmanagerplugin.effects.effects.bumpattacker;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
@@ -85,7 +86,7 @@ public class BumpAttackerEffect extends AbstractEffect {
 	/**
 	 * @param entityDamageByEntityEvent
 	 */
-	private void doBumps(final Entity entity) {
+	private void doBumps(Entity entity) {
 		if (entity instanceof Player && getSurvivalParam()) {
 			final Player damager = (Player) entity;
 			if (damager.getGameMode().equals(GameMode.CREATIVE)) {
@@ -99,26 +100,39 @@ public class BumpAttackerEffect extends AbstractEffect {
 			}
 		}
 		int maxexclusive = getNumberOfBumps();
-
+		final UUID worldUID = entity.getWorld().getUID();
+		final int entityId = entity.getEntityId();
 		for(int i = 0 ; i< maxexclusive ; i++) {
 			final EffectParameters params = getABumpParameter(i);
 			final double velX = getXVelocity(params);
 			final double velY = getYVelocity(params);
 			final double velZ = getZVelocity(params);
+			final int delay = getDelay(params);
+			if (delay == 0) {
+				if (entity instanceof Player) {
+					((Player)entity).playSound(entity.getLocation(), Sound.ARROW_HIT, 100, 100);
+				}
+				entity.playEffect(EntityEffect.HURT);
+				entity.setVelocity(new Vector(velX,velY,velZ));
+			}
 			runTaskLater(new Runnable() {
 				
 				@Override
 				public void run() {
 					{
-						if (entity instanceof Player) {
-							((Player)entity).playSound(entity.getLocation(), Sound.ARROW_HIT, 100, 100);
+						Entity curEntity =  BumpAttackerEffect.getEntity(worldUID,entityId);
+						if (curEntity == null) {
+							return;
 						}
-						entity.playEffect(EntityEffect.HURT);
-						entity.setVelocity(entity.getVelocity().add(new Vector(velX,velY,velZ)));
+						if (curEntity instanceof Player) {
+							((Player)curEntity).playSound(curEntity.getLocation(), Sound.ARROW_HIT, 100, 100);
+						}
+						curEntity.playEffect(EntityEffect.HURT);
+						curEntity.setVelocity(new Vector(velX,velY,velZ));
 					}
 					
 				}
-			}, getDelay(params));
+			}, delay);
 		}
 	}
 
@@ -181,6 +195,7 @@ public class BumpAttackerEffect extends AbstractEffect {
 		EffectParameters ret = new EffectParameters("effect Parameters","params","Bump Effect Parameters.", true, " ", 0);
 		EffectParameters paramBumps = new EffectParameters("Bumps","Bumps","The list of the bumps effects ';' .", true, ";", 0);
 		EffectParameters paramBump = new EffectParameters("Bump","Bump"+EffectParameters.ITERATION_PARAMETER+ "0","The bump parameters ','.", true, ",", 4);
+		//TODO Find define and check the maximum limit of the velocity values from which the message <playerName> moved too quickly will be shown.
 		DoubleEffectParameter paramVelocityX = new DoubleEffectParameter("velocityX","velocityX","defines the bump vector X coordinate and by the way the bump power.",true,new Double(0), new Double(-999), new Double(999));
 		paramBump.addSubEffectParameter(paramVelocityX);
 		DoubleEffectParameter paramVelocityY = new DoubleEffectParameter("velocityY","velocityY","defines the bump vector Y coordinate and by the way the bump power.",true,new Double(0), new Double(-999), new Double(999));

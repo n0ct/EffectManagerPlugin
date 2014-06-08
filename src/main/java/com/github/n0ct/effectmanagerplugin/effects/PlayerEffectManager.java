@@ -30,8 +30,6 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 
 	private Map<String,List<AbstractEffect>> playersEffects;
 
-	private EventListenerManager eventListenerManager;
-	
 	private EffectManager effectManager;
 
 	private EffectManagerPlugin plugin;
@@ -56,7 +54,6 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		this.plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
 		this.playersEffects = new TreeMap<String,List<AbstractEffect>>();
 		this.effectManager = plugin.getEffectManager();
-		this.eventListenerManager = new EventListenerManager();
 	}
 
 	@Override
@@ -130,7 +127,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		for (Class<? extends AbstractEventListener<?>> eventListenerClass : effect.getNeededEvents()) {
 			AbstractEventListener<?> eventListener = null;
 			try {
-				eventListener = this.eventListenerManager.getEventListener(eventListenerClass);
+				eventListener = EventListenerManager.getInstance().getEventListener(eventListenerClass);
 				if (eventListener == null) {
 					throw new IllegalArgumentException("An error occured during the EventListener creation.");
 				}
@@ -139,7 +136,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 				throw new IllegalArgumentException("An error occured during the EventListener creation: " + e.getClass().toString() +".");
 			}
 			
-			//associe le(s) eventListener(s) appropriees a l effet
+			//associe le(s) eventListener(s) approprie(s) a l effet
 			eventListener.addObserver(effect);
 		}
 
@@ -151,10 +148,6 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		this.playersEffects.get(playerName).add(effect);
 	}
 	
-	public void registerEvents(AbstractEventListener<?> eventListener) {
-		this.plugin.getServer().getPluginManager().registerEvents(eventListener,this.plugin);
-	}
-	
 	public void del(String playerName, String effectName) {
 		checkPlayer(playerName);
 		AbstractEffect effect = getEffect(playerName, effectName);
@@ -164,7 +157,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		for (Class<? extends AbstractEventListener<?>> eventListenerClass : effect.getNeededEvents()) {
 			AbstractEventListener<?> eventListener = null;
 			try {
-				eventListener = this.eventListenerManager.getEventListener(eventListenerClass);
+				eventListener = EventListenerManager.getInstance().getEventListener(eventListenerClass);
 				if (eventListener == null) {
 					throw new IllegalArgumentException("An error occured during the EventListener removal.");
 				}
@@ -173,6 +166,15 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 				throw new IllegalArgumentException("An error occured during the EventListener removal: " + e.getClass().toString() +".");
 			}
 			eventListener.deleteObserver(effect);
+			if (eventListener.countObservers() == 0) {
+				try {
+					EventListenerManager.getInstance().removeIfNeeded(eventListener);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					throw new IllegalArgumentException("An error occured during the EventListener removal: " + e.getClass().toString() +".");
+				}
+			}
+			
 		}
 		this.playersEffects.get(playerName).remove(effect);
 	}
@@ -212,7 +214,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 			for (Class<? extends AbstractEventListener<?>> eventListenerClass : effect.getNeededEvents()) {
 				AbstractEventListener<?> eventListener;
 	
-					eventListener = this.eventListenerManager.getEventListener(eventListenerClass);
+					eventListener = EventListenerManager.getInstance().getEventListener(eventListenerClass);
 				EntityDamageEvent.getHandlerList();
 				eventListener.deleteObserver(effect);
 				if (eventListener.countObservers() == 0) {

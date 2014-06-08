@@ -87,6 +87,10 @@ public class EffectParameters extends AbstractEffectParameter implements Cloneab
 	public final ArrayList<AbstractEffectParameter> getSubParameters() {
 		return subParameters;
 	}
+	
+	public final void setSubParameters(ArrayList<AbstractEffectParameter> subParameters) {
+		this.subParameters = subParameters;
+	}
 
 	public AbstractEffectParameter getParameterWithUniqueName(String uniqueName, boolean depthSearch) {
 		for (AbstractEffectParameter subParam : this.subParameters) {
@@ -215,6 +219,17 @@ public class EffectParameters extends AbstractEffectParameter implements Cloneab
 		this.maxNumberOfSubParams = maxNumberOfSubParams;
 	}
 
+	@Override
+	public AbstractEffectParameter clone() throws CloneNotSupportedException {
+		EffectParameters effectParameters = (EffectParameters) super.clone();
+		ArrayList<AbstractEffectParameter> clonedSubParameters = new ArrayList<AbstractEffectParameter>();
+		for (AbstractEffectParameter effectParameter : effectParameters.getSubParameters()) {
+			clonedSubParameters.add(effectParameter.clone());
+		}
+		effectParameters.setSubParameters(clonedSubParameters);
+		return effectParameters;
+	}
+	
 	@Override
 	public String getDefinition(int level) {
 		StringBuilder prefix = new StringBuilder();

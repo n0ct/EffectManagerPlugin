@@ -1,7 +1,7 @@
 effects:
-  batman:
-    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.SimplePathEntityEffect
-    name: batman
+  batmanTemp:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.TemporaryPathEntityEffect
+    name: batmanTemp
     parameters:
       className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
       description: Simple Path Entity Effect Parameters
@@ -27,11 +27,158 @@ effects:
           optionnal: true
           uniqueName: entityType
           value: BAT
+        timeBeforeDespawn:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '200'
+          description: The time between the spawn and the despawn of an entity.
+          maxValue: '10000'
+          minValue: '1'
+          name: timeBeforeDespawn
+          optionnal: true
+          uniqueName: timeBeforeDespawn
+          value: '2000'
       splitSeparator: ' '
       uniqueName: params
-  chicken:
-    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.SimplePathEntityEffect
-    name: chicken
+  bumpAttacker:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.bumpattacker.BumpAttackerEffect
+    name: bumpAttacker
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Bump Effect Parameters.
+      maxNumberOfSubParams: 0
+      name: effect Parameters
+      optionnal: true
+      parameters:
+        Bumps:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: The list of the bumps effects ';' .
+          maxNumberOfSubParams: 0
+          name: Bumps
+          optionnal: true
+          parameters:
+            Bump_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The bump parameters ','.
+              maxNumberOfSubParams: 4
+              name: Bump
+              optionnal: true
+              parameters:
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the bump will be done.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '0'
+                velocityX:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector X coordinate and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityX
+                  optionnal: true
+                  uniqueName: velocityX
+                  value: '0.0'
+                velocityY:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector Y coordinate and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityY
+                  optionnal: true
+                  uniqueName: velocityY
+                  value: '10.0'
+                velocityZ:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector Z coordinateand and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityZ
+                  optionnal: true
+                  uniqueName: velocityZ
+                  value: '0.0'
+              splitSeparator: ','
+              uniqueName: Bump_0
+            Bump_1:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The bump parameters ','.
+              maxNumberOfSubParams: 4
+              name: Bump
+              optionnal: true
+              parameters:
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the bump will be done.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '60'
+                velocityX:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector X coordinate and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityX
+                  optionnal: true
+                  uniqueName: velocityX
+                  value: '0.0'
+                velocityY:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector Y coordinate and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityY
+                  optionnal: true
+                  uniqueName: velocityY
+                  value: '-10.0'
+                velocityZ:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+                  defaultValue: '0.0'
+                  description: defines the bump vector Z coordinateand and by the way the bump power.
+                  maxValue: '999.0'
+                  minValue: '-999.0'
+                  name: velocityZ
+                  optionnal: true
+                  uniqueName: velocityZ
+                  value: '0.0'
+              splitSeparator: ','
+              uniqueName: Bump_1
+          splitSeparator: ;
+          uniqueName: Bumps
+        survival:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.BooleanEffectParameter
+          defaultValue: 'false'
+          description: Sets victim's gamemode to survival.
+          name: survival
+          optionnal: true
+          uniqueName: survival
+          value: 'false'
+        timeBeforeCreative:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Defines the time before the victim's gamemode will return to creative.
+          maxValue: '3000'
+          minValue: '0'
+          name: timeBeforeCreative
+          optionnal: true
+          uniqueName: timeBeforeCreative
+          value: '0'
+      splitSeparator: ' '
+      uniqueName: params
+  chickenTemp:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.TemporaryPathEntityEffect
+    name: chickenTemp
     parameters:
       className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
       description: Simple Path Entity Effect Parameters
@@ -57,6 +204,48 @@ effects:
           optionnal: true
           uniqueName: entityType
           value: CHICKEN
+        timeBeforeDespawn:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '200'
+          description: The time between the spawn and the despawn of an entity.
+          maxValue: '10000'
+          minValue: '1'
+          name: timeBeforeDespawn
+          optionnal: true
+          uniqueName: timeBeforeDespawn
+          value: '600'
+      splitSeparator: ' '
+      uniqueName: params
+  doubleJump:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.jump.DoubleJumpEffect
+    name: doubleJump
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Double Jump Effect Parameters.
+      maxNumberOfSubParams: 0
+      name: Double Jump Effect Parameters
+      optionnal: true
+      parameters:
+        jumpHeight:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+          defaultValue: '1.0'
+          description: Defines the height of the double jump.
+          maxValue: '3.0'
+          minValue: '0.5'
+          name: jumpHeight
+          optionnal: true
+          uniqueName: jumpHeight
+          value: '1.0'
+        velocityMultiplier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+          defaultValue: '1.5'
+          description: Defines the multiplier that increase the horizontal velocity of the player upon double jumping.
+          maxValue: '3.0'
+          minValue: '1.0'
+          name: velocityMultiplier
+          optionnal: true
+          uniqueName: velocityMultiplier
+          value: '1.5'
       splitSeparator: ' '
       uniqueName: params
   dropLog:
@@ -536,6 +725,233 @@ effects:
           value: '2'
       splitSeparator: ' '
       uniqueName: params
+  multiBlindAttacker:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.effectattacker.EffectAttackerEffect
+    name: multiBlindAttacker
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Effect Attacker Effect Parameters.
+      maxNumberOfSubParams: 0
+      name: Effect Attacker Parameters
+      optionnal: true
+      parameters:
+        Effects:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: The list of the effects ';' .
+          maxNumberOfSubParams: 0
+          name: Effects
+          optionnal: true
+          parameters:
+            Effect_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The effect parameters ','.
+              maxNumberOfSubParams: 4
+              name: Effect
+              optionnal: true
+              parameters:
+                amplifier:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '1'
+                  description: defines the amplifier for the effect witch will be applied to the player.
+                  maxValue: '100'
+                  minValue: '1'
+                  name: Effect amplifier
+                  optionnal: true
+                  uniqueName: amplifier
+                  value: '2'
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the effect will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: Delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '0'
+                duration:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '10'
+                  description: defines the duration of the effect witch will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Effect duration
+                  optionnal: true
+                  uniqueName: duration
+                  value: '20'
+                effect:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
+                  defaultValue: CONFUSION
+                  description: defines the Effect Type witch will be applied to the player.
+                  name: Effect type
+                  optionnal: true
+                  uniqueName: effect
+                  value: BLINDNESS
+              splitSeparator: ','
+              uniqueName: Effect_0
+            Effect_1:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The effect parameters ','.
+              maxNumberOfSubParams: 4
+              name: Effect
+              optionnal: true
+              parameters:
+                amplifier:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '1'
+                  description: defines the amplifier for the effect witch will be applied to the player.
+                  maxValue: '100'
+                  minValue: '1'
+                  name: Effect amplifier
+                  optionnal: true
+                  uniqueName: amplifier
+                  value: '2'
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the effect will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: Delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '25'
+                duration:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '10'
+                  description: defines the duration of the effect witch will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Effect duration
+                  optionnal: true
+                  uniqueName: duration
+                  value: '20'
+                effect:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
+                  defaultValue: CONFUSION
+                  description: defines the Effect Type witch will be applied to the player.
+                  name: Effect type
+                  optionnal: true
+                  uniqueName: effect
+                  value: BLINDNESS
+              splitSeparator: ','
+              uniqueName: Effect_1
+            Effect_2:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The effect parameters ','.
+              maxNumberOfSubParams: 4
+              name: Effect
+              optionnal: true
+              parameters:
+                amplifier:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '1'
+                  description: defines the amplifier for the effect witch will be applied to the player.
+                  maxValue: '100'
+                  minValue: '1'
+                  name: Effect amplifier
+                  optionnal: true
+                  uniqueName: amplifier
+                  value: '2'
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the effect will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: Delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '50'
+                duration:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '10'
+                  description: defines the duration of the effect witch will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Effect duration
+                  optionnal: true
+                  uniqueName: duration
+                  value: '20'
+                effect:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
+                  defaultValue: CONFUSION
+                  description: defines the Effect Type witch will be applied to the player.
+                  name: Effect type
+                  optionnal: true
+                  uniqueName: effect
+                  value: BLINDNESS
+              splitSeparator: ','
+              uniqueName: Effect_2
+            Effect_3:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: The effect parameters ','.
+              maxNumberOfSubParams: 4
+              name: Effect
+              optionnal: true
+              parameters:
+                amplifier:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '1'
+                  description: defines the amplifier for the effect witch will be applied to the player.
+                  maxValue: '100'
+                  minValue: '1'
+                  name: Effect amplifier
+                  optionnal: true
+                  uniqueName: amplifier
+                  value: '2'
+                delay:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '0'
+                  description: the delay before the effect will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '0'
+                  name: Delay
+                  optionnal: true
+                  uniqueName: delay
+                  value: '75'
+                duration:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '10'
+                  description: defines the duration of the effect witch will be applied to the player.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Effect duration
+                  optionnal: true
+                  uniqueName: duration
+                  value: '20'
+                effect:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
+                  defaultValue: CONFUSION
+                  description: defines the Effect Type witch will be applied to the player.
+                  name: Effect type
+                  optionnal: true
+                  uniqueName: effect
+                  value: BLINDNESS
+              splitSeparator: ','
+              uniqueName: Effect_3
+          splitSeparator: ;
+          uniqueName: Effects
+        survival:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.BooleanEffectParameter
+          defaultValue: 'false'
+          description: Sets victim's gamemode to survival.
+          name: survival
+          optionnal: true
+          uniqueName: survival
+          value: 'false'
+        timeBeforeCreative:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Defines the time before the victim's gamemode will return to creative.
+          maxValue: '3000'
+          minValue: '0'
+          name: timeBeforeCreative
+          optionnal: true
+          uniqueName: timeBeforeCreative
+          value: '0'
+      splitSeparator: ' '
+      uniqueName: params
   spongePath:
     className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.PathBlockEffect
     name: spongePath
@@ -586,4 +1002,4 @@ effects:
       splitSeparator: ' '
       uniqueName: params
 playersEffects:
-  bZx_: batman
+  bZx_: doubleJump

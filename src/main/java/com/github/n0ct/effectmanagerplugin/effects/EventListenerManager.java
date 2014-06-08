@@ -12,13 +12,12 @@ import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEven
 
 public class EventListenerManager {
 
-	PlayerEffectManager playerEffectManager;
-	
 	private Map<String, AbstractEventListener<?>> eventListeners;
 
-	public EventListenerManager() {
+	private static EventListenerManager instance;
+	
+	private EventListenerManager() {
 		eventListeners = new TreeMap<String,AbstractEventListener<?>>();
-		this.playerEffectManager = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class).getPlayerEffectManager();
 	}
 	
 	public AbstractEventListener<?> getEventListener(Class<? extends AbstractEventListener<?>> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
@@ -35,13 +34,29 @@ public class EventListenerManager {
 			eventListener = ((AbstractEventListener<?>) constructors[0].newInstance());
 		} catch(Exception e) {
 			e.printStackTrace();
+			throw new IllegalArgumentException("[INTERNAL ERROR] error during the event listeners initialization.");
 		}
 		if (eventListener == null) {
 			throw new IllegalArgumentException("[INTERNAL ERROR] error during the event listeners initialization.");
 		}
-		playerEffectManager.registerEvents(eventListener);
+		EffectManagerPlugin plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
+		plugin.getServer().getPluginManager().registerEvents(eventListener, plugin);
 		eventListeners.put(clazz.getName(), eventListener);
 		
 		return eventListener;
+	}
+	
+	public void removeIfNeeded(AbstractEventListener<?> eventListener) throws IllegalAccessException {
+		if (eventListener.countObservers() == 0) {
+			eventListener.unregister();
+			eventListeners.remove(eventListener.getClass().getName());
+		}
+	}
+
+	public static EventListenerManager getInstance() {
+		if (instance == null) {
+			instance = new EventListenerManager();
+		}
+		return instance;
 	}
 }

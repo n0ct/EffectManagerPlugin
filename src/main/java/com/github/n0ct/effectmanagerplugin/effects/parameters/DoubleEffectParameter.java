@@ -20,8 +20,14 @@ public class DoubleEffectParameter extends AbstractPrimitiveEffectParameter<Doub
 	
 	public DoubleEffectParameter(Map<String,Object> map) {
 		super(map);
+		if (map.get("maxValue") == null) {
+			throw new IllegalArgumentException("maxValue is undefined.");
+		}
+		if (map.get("minValue") == null) {
+			throw new IllegalArgumentException("minValue is undefined.");
+		}
 		this.max_value = Double.parseDouble((String) map.get("maxValue"));
-		this.min_value = Double.parseDouble((String) map.get("minvalue"));
+		this.min_value = Double.parseDouble((String) map.get("minValue"));
 	}
 	
 	@Override

@@ -61,8 +61,7 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 					Vector pt = new Vector(x,y,z);
 					if (pt.toVector2D().subtract(center).divide(radius).lengthSq() <= 1) {
 						PathSavedBlock pathSavedBlock = new PathSavedBlock(world.getBlockAt(x, y, z));
-						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(pathSavedBlock.getType()) ||
-								getMaterials().contains(pathSavedBlock.getType()))) {
+						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(pathSavedBlock.getType()) || getMaterials().contains(pathSavedBlock.getType()))) {
 							Block upBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+1,pathSavedBlock.getLocation().getBlockZ());
 							Block upperpBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+2,pathSavedBlock.getLocation().getBlockZ());
 							if ((upBlock.getType() == Material.AIR || upBlock.getType() == Material.SNOW) && (upperpBlock.getType() == Material.AIR)) {

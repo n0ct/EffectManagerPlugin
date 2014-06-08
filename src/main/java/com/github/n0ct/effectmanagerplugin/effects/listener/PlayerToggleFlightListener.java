@@ -4,7 +4,7 @@
 package com.github.n0ct.effectmanagerplugin.effects.listener;
 
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleFlightEvent;
 
 import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEventListener;
 
@@ -12,19 +12,19 @@ import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEven
  * @author Benjamin
  *
  */
-public class PlayerMoveListener extends AbstractEventListener<PlayerMoveEvent> {
+public class PlayerToggleFlightListener extends AbstractEventListener<PlayerToggleFlightEvent> {
 
-	public PlayerMoveListener() {
-		super(PlayerMoveEvent.class);
+	public PlayerToggleFlightListener() {
+		super(PlayerToggleFlightEvent.class);
 	}
 	
 	@EventHandler
-	public void on(PlayerMoveEvent event) {
+	public void on(PlayerToggleFlightEvent event) {
 		onEvent(event);
 	}
 
 	@Override
 	public void unregister() {
-		PlayerMoveEvent.getHandlerList().unregister(this);
+		PlayerToggleFlightEvent.getHandlerList().unregister(this);
 	}
 }

@@ -4,18 +4,22 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.reflections.Reflections;
 
+import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
 import com.github.n0ct.effectmanagerplugin.effects.PlayerEffectManager;
 import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEventListener;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
@@ -169,13 +173,23 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 			effect = constructor.newInstance(map);
 		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
-			throw new IllegalArgumentException("[INTERNAL ERROR] An error ocurred durign the deserialization process.",e);
+			throw new IllegalArgumentException("[INTERNAL ERROR] An error ocurred durign the deserialization process of the parameters of the effect "+ map.get("name")+".",e);
 		}
 		return effect;
 	}
 	
 	public static AbstractEffect valueOf(Map<String,Object> map) {
 		return deserialize(map);
+	}
+	
+	protected static Entity getEntity(UUID worldUID, int entityId) {
+		List<Entity> entities = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class).getServer().getWorld(worldUID).getEntities();
+		for (Entity entity : entities) {
+			if (entity.getEntityId() == entityId) {
+				return entity;
+			}
+		}
+		return null;
 	}
 
 }

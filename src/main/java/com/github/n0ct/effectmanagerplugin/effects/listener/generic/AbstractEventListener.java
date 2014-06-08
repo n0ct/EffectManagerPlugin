@@ -24,4 +24,7 @@ public abstract class AbstractEventListener<T extends Event> extends Observable 
 	public Class<? extends Event> getObservedEvent() {
 		return clazz;
 	}
+
+	public abstract void unregister();
+	
 }

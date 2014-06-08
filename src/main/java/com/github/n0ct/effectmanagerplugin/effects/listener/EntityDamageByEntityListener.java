@@ -14,4 +14,10 @@ public class EntityDamageByEntityListener extends AbstractEventListener<EntityDa
 	public void on(EntityDamageByEntityEvent event) {
 		onEvent(event);
 	}
+
+	@Override
+	public void unregister() {
+		EntityDamageByEntityEvent.getHandlerList().unregister(this);
+	}
+
 }

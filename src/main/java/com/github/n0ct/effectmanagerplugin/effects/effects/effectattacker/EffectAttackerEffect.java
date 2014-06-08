@@ -2,13 +2,19 @@ package com.github.n0ct.effectmanagerplugin.effects.effects.effectattacker;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.GameMode;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.github.n0ct.effectmanagerplugin.EffectManagerPlugin;
 import com.github.n0ct.effectmanagerplugin.effects.generic.AbstractEffect;
 import com.github.n0ct.effectmanagerplugin.effects.generic.EffectType;
 import com.github.n0ct.effectmanagerplugin.effects.listener.EntityDamageByEntityListener;
@@ -39,7 +45,7 @@ public class EffectAttackerEffect extends AbstractEffect {
 
 	public void onCall() {
 		Player p = getPlayer();
-		doEffect(p);
+		doEffect((Entity)p);
 	}
 
 
@@ -75,9 +81,7 @@ public class EffectAttackerEffect extends AbstractEffect {
 		if (!victim.getName().equals(getPlayerName())) {
 			return;
 		}
-		if (entityDamageByEntityEvent.getDamager() instanceof Player) {
-			doEffect((Player)entityDamageByEntityEvent.getDamager());
-		}
+		doEffect(entityDamageByEntityEvent.getDamager());
 	}
 	
 	@Override
@@ -90,28 +94,51 @@ public class EffectAttackerEffect extends AbstractEffect {
 		return true;
 	}
 
-	private void doEffect(final Player player) {
-			if (getSurvival()) {
-				if (player.getGameMode().equals(GameMode.CREATIVE)) {
-					player.setGameMode(GameMode.SURVIVAL);
-					
-					runTaskLater(new Runnable() {
-						public void run() {
-							player.setGameMode(GameMode.CREATIVE);
-						}
-					},getTimeBeforeCreative());
-				}
-			}
-			int maxexclusive = getNumberOfEffects();
-			for(int i = 0 ; i< maxexclusive ; i++) {
-				final EffectParameters params = getAnEffectParameter(i);
+	private void doEffect(final Entity damager) {	
+		if (!(damager instanceof Player)) {
+			return;
+		}
+		Player player = (Player) damager;
+		final UUID worldUID = player.getWorld().getUID();
+		final int entityId = player.getEntityId();
+		if (getSurvival() && player != null) {
+			if (player.getGameMode().equals(GameMode.CREATIVE)) {
+				player.setGameMode(GameMode.SURVIVAL);
+				
 				runTaskLater(new Runnable() {
-					@Override
 					public void run() {
-						player.addPotionEffect(getPotionEffectType(params).createEffect(getDuration(params), getAmplifier(params)),true);
+						Entity e = getEntity(worldUID, entityId);
+						if (e != null && e instanceof Player) {
+							((Player)e).setGameMode(GameMode.CREATIVE);
+						}
 					}
-				},getDelay(params));
+				},getTimeBeforeCreative());
 			}
+		}
+		int maxexclusive = getNumberOfEffects();
+		for(int i = 0 ; i< maxexclusive ; i++) {
+			final EffectParameters params = getAnEffectParameter(i);
+			final PotionEffectType potionEffectType = getPotionEffectType(params);
+			final int duration = getDuration(params);
+			final int amplifier = getAmplifier(params);
+			final int delay = getDelay(params);
+			runTaskLater(new Runnable() {
+				@Override
+				public void run() {
+					Entity e = getEntity(worldUID, entityId);
+					LivingEntity le = null;
+					if (e != null && !e.isDead()) {
+						le = (LivingEntity)e;
+					}
+					if (le != null) {
+						PotionEffect pe = new PotionEffect(potionEffectType,duration,amplifier);
+						if (!pe.apply(le)) {
+							EffectManagerPlugin.getPlugin(EffectManagerPlugin.class).getLogger().log(Level.WARNING,"Effect " + potionEffectType.toString() + " with duration " + duration + ", amplifier "+ amplifier + ", delay " + delay + " could not be applied to the player " + ((Player)e).getName() + ".");
+						}
+					}
+				}
+			},delay);
+		}
 		
 	}
 	

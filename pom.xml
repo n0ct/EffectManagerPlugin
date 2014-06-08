@@ -45,7 +45,6 @@
 		                    <resource>
 		                        <description>Copy artifact to another directory</description>
 		                        <targetPaths>
-		                        	<targetPath>D:\DEV\Minecraft\Server\plugins\</targetPath>
 		                        	<targetPath>${project.directory}/../dist/plugins</targetPath>
 		                        </targetPaths>
 		                        <pack>false</pack>

@@ -88,10 +88,11 @@ public abstract class AbstractEffectParameter implements ConfigurationSerializab
 		this.optionnal = optionnal;
 	}
 	
+	@Override
 	public AbstractEffectParameter clone() throws CloneNotSupportedException {
 		return (AbstractEffectParameter) super.clone();
-		
 	}
+	
 	public abstract void setValueFromString(String str);
 	
 	public String toString() {

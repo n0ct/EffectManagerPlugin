@@ -2,10 +2,7 @@ package com.github.n0ct.effectmanagerplugin.effects.effects.path.entity;
 
 import java.util.Map;
 
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 
 import com.github.n0ct.effectmanagerplugin.effects.effects.path.AbstractPathEffect;
 import com.github.n0ct.effectmanagerplugin.effects.generic.EffectType;
@@ -18,7 +15,6 @@ public abstract class AbstractPathEntityEffect extends AbstractPathEffect {
 	
 	private static final String EFFECT_DESCRIPTION = "spawn entity behind the player's steps.";
 	
-	private int frequence = 0;
 	
 	@Override
 	public final EffectType getType() {
@@ -33,29 +29,6 @@ public abstract class AbstractPathEntityEffect extends AbstractPathEffect {
 		super(map);
 		
 	}
-
-
-	@Override
-	protected void doPathModifications(Location from, Player player) {
-		World world = player.getWorld();
-		int maxAmplifier = ((IntegerEffectParameter)getParameters().getParameterWithUniqueName("amplifier", false)).getMax();
-		int amplifier = getAmplifier();
-		EntityType entityType = getEntityType();
-		// From that amplifier value we must create one entity each times the player moves.
-		int halfMaxFreq = maxAmplifier / 2;
-		if (amplifier > halfMaxFreq) {
-			world.spawnEntity(from,entityType);
-		}
-		if (frequence == halfMaxFreq) {
-			world.spawnEntity(from,entityType);
-		} else {
-			frequence = frequence + amplifier;
-			if (frequence>halfMaxFreq) {
-				frequence = halfMaxFreq;
-			}
-		}
-	}
-	
 
 	/**
 	 * @return the amplifier

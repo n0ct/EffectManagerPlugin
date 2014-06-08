@@ -65,23 +65,33 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 							Block upBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+1,pathSavedBlock.getLocation().getBlockZ());
 							if (upBlock.getType() == Material.AIR) {
 								savedBlocks.add(pathSavedBlock);
-							} else if (upBlock.getType() == Material.SNOW) {
-								savedBlocks.add(pathSavedBlock);
-								savedBlocks.add(new PathSavedBlock(upBlock));
+							} else {
+								if (upBlock.getType() == Material.SNOW) {
+									Block upperBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+2,origin.getLocation().getBlockZ());
+									if (upperBlock.getType() == Material.AIR) {
+										savedBlocks.add(pathSavedBlock);
+										savedBlocks.add(new PathSavedBlock(upBlock));
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		} else {
-			if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(origin.getType()) ||
-					getMaterials().contains(origin.getType()))) {
+			if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(origin.getType()) || getMaterials().contains(origin.getType()))) {
 				Block upBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+1,origin.getLocation().getBlockZ());
+				
 				if (upBlock.getType() == Material.AIR) {
 					savedBlocks.add(origin);
-				} else if (upBlock.getType() == Material.SNOW) {
-					savedBlocks.add(origin);
-					savedBlocks.add(new PathSavedBlock(upBlock));
+				} else {
+					if (upBlock.getType() == Material.SNOW) {
+						Block upperBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+2,origin.getLocation().getBlockZ());
+						if (upperBlock.getType() == Material.AIR) {
+							savedBlocks.add(origin);
+							savedBlocks.add(new PathSavedBlock(upBlock));
+						}
+					}
 				}
 			}
 		}
@@ -102,6 +112,9 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 			if (pathSavedBlock.getLocation().getY() == y) {
 				Material material = getMaterials().get(rdm.nextInt(getMaterials().size()));
 				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setType(material);
+				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData((byte)0, false);
+			} else {
+				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setType(Material.AIR);
 				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData((byte)0, false);
 			}
 		}

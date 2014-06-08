@@ -36,7 +36,7 @@ public class CallEffectCommandExecutor extends AbstractCommandExecutor implement
 		if (args.length < 1) {
 			targetPlayerName = player.getName();
 		}
-		if (args.length > 2 || args[0] == "help") {
+		if (args.length > 2 || (args.length >= 1 && args[0] == "help")) {
 			showHelp(player,new String[0]);
 			return true;
 		}

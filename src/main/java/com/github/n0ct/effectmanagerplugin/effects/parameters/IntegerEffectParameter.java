@@ -34,6 +34,12 @@ public class IntegerEffectParameter extends AbstractPrimitiveEffectParameter<Int
 	
 	public IntegerEffectParameter(Map<String,Object> map) {
 		super(map);
+		if (map.get("maxValue") == null) {
+			throw new IllegalArgumentException("maxValue is undefined.");
+		}
+		if (map.get("minValue") == null) {
+			throw new IllegalArgumentException("minValue is undefined.");
+		}
 		this.max_value = Integer.parseInt((String) map.get("maxValue"));
 		this.min_value = Integer.parseInt((String) map.get("minValue"));
 	}
