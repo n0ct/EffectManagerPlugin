@@ -11,8 +11,9 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 
 	public AbstractPrimitiveEffectParameter(Map<String,Object> map){
 		super(map);
-		setValueFromString((String) map.get("value"));
+		init();
 		setDefaultValueFromString((String)map.get("defaultValue"));
+		setValueFromString((String) map.get("value"));
 	}
 
 	protected void setDefaultValueFromString(String string) {
@@ -48,6 +49,7 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 
 	public AbstractPrimitiveEffectParameter(String name, String uniqueName,	String description, boolean optionnal, T defaultValue) {
 		super(name, uniqueName, description, optionnal);
+		init();
 		setDefaultValue(defaultValue);
 	}
 	
@@ -102,4 +104,6 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 	public void setDefaultValueAsValue() {
 		setValue(getDefaultValue());
 	}
+
+	protected void init() {}
 }

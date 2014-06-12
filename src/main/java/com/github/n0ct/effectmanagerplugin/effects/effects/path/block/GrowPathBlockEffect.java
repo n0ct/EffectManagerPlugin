@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
-import com.github.n0ct.effectmanagerplugin.util.Vector;
-import com.github.n0ct.effectmanagerplugin.util.Vector2D;
+import com.github.n0ct.effectmanagerplugin.utils.Vector;
+import com.github.n0ct.effectmanagerplugin.utils.Vector2D;
 
 public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 

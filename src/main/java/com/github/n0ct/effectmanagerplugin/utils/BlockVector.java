@@ -17,25 +17,26 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.github.n0ct.effectmanagerplugin.util;
+package com.github.n0ct.effectmanagerplugin.utils;
 
 /**
-* Extension of Vector2D that supports being compared as ints (for accuracy).
+* Extension of Vector that supports being compared as ints (for accuracy).
 *
 * @author sk89q
 */
-public class BlockVector2D extends Vector2D {
-    public static final BlockVector2D ZERO = new BlockVector2D(0, 0);
-    public static final BlockVector2D UNIT_X = new BlockVector2D(1, 0);
-    public static final BlockVector2D UNIT_Z = new BlockVector2D(0, 1);
-    public static final BlockVector2D ONE = new BlockVector2D(1, 1);
+public class BlockVector extends Vector {
+    public static final BlockVector ZERO = new BlockVector(0, 0, 0);
+    public static final BlockVector UNIT_X = new BlockVector(1, 0, 0);
+    public static final BlockVector UNIT_Y = new BlockVector(0, 1, 0);
+    public static final BlockVector UNIT_Z = new BlockVector(0, 0, 1);
+    public static final BlockVector ONE = new BlockVector(1, 1, 1);
 
     /**
 * Construct the Vector object.
 *
 * @param pt
 */
-    public BlockVector2D(Vector2D pt) {
+    public BlockVector(Vector pt) {
         super(pt);
     }
 
@@ -43,30 +44,35 @@ public class BlockVector2D extends Vector2D {
 * Construct the Vector object.
 *
 * @param x
+* @param y
 * @param z
 */
-    public BlockVector2D(int x, int z) {
-        super(x, z);
+    public BlockVector(int x, int y, int z) {
+        super(x, y, z);
     }
 
     /**
 * Construct the Vector object.
 *
+*
 * @param x
+* @param y
 * @param z
 */
-    public BlockVector2D(float x, float z) {
-        super(x, z);
+    public BlockVector(float x, float y, float z) {
+        super(x, y, z);
     }
 
     /**
 * Construct the Vector object.
 *
+*
 * @param x
+* @param y
 * @param z
 */
-    public BlockVector2D(double x, double z) {
-        super(x, z);
+    public BlockVector(double x, double y, double z) {
+        super(x, y, z);
     }
 
     /**
@@ -77,11 +83,12 @@ public class BlockVector2D extends Vector2D {
 */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Vector2D)) {
+        if (!(obj instanceof Vector)) {
             return false;
         }
-        Vector2D other = (Vector2D) obj;
-        return (int) other.x == (int) this.x && (int) other.z == (int) this.z;
+        Vector other = (Vector) obj;
+        return (int) other.getX() == (int) this.x && (int) other.getY() == (int) this.y
+                && (int) other.getZ() == (int) this.z;
 
     }
 
@@ -92,12 +99,13 @@ public class BlockVector2D extends Vector2D {
 */
     @Override
     public int hashCode() {
-        return (Integer.valueOf((int) x).hashCode() >> 13) ^
-                Integer.valueOf((int) z).hashCode();
+        return ((int) x << 19) ^
+                ((int) y << 12) ^
+                (int) z;
     }
 
     @Override
-    public BlockVector2D toBlockVector2D() {
+    public BlockVector toBlockVector() {
         return this;
     }
 }

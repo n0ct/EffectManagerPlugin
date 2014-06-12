@@ -146,6 +146,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 			this.playersEffects.put(playerName,new ArrayList<AbstractEffect>());
 		}
 		this.playersEffects.get(playerName).add(effect);
+		effect.onEnable();
 	}
 	
 	public void del(String playerName, String effectName) {
@@ -176,6 +177,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 			}
 			
 		}
+		effect.onDisable();
 		this.playersEffects.get(playerName).remove(effect);
 	}
 	

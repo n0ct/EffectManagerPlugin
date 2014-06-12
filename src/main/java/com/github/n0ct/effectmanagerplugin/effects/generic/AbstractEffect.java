@@ -191,5 +191,9 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 		}
 		return null;
 	}
+	
+	public void onDisable() {}
+	
+	public void onEnable() {}
 
 }

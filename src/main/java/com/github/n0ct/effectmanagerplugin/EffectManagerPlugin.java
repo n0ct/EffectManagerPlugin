@@ -8,7 +8,7 @@ import com.github.n0ct.effectmanagerplugin.effects.EffectManager;
 import com.github.n0ct.effectmanagerplugin.effects.PlayerEffectManager;
 
 
-
+//TODO Credits to WorldEdit (Vector management in growing and explosion effects) and CustomProjectiles. Check their licences and if needed modify the corresponding code. 
 public class EffectManagerPlugin extends JavaPlugin{
 
 	private EffectManager effectManager;

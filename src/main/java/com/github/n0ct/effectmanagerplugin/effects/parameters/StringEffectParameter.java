@@ -27,8 +27,8 @@ public class StringEffectParameter extends AbstractPrimitiveEffectParameter<Stri
 		super(map);
 	}
 	
-	public StringEffectParameter(String name, String uniqueName, String description, boolean optionnal, String defaultValue, String value) {
-		super(name, uniqueName, description, optionnal, defaultValue, value);
+	public StringEffectParameter(String name, String uniqueName, String description, boolean optionnal, String defaultValue) {
+		super(name, uniqueName, description, optionnal, defaultValue);
 	}
 	
 	@Override

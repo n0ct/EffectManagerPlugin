@@ -952,6 +952,66 @@ effects:
           value: '0'
       splitSeparator: ' '
       uniqueName: params
+  orbExplosion:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.projectileExplosion.ProjectileExplosionEffect
+    name: orbExplosion
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Projectile explosion effect Parameter
+      maxNumberOfSubParams: 1
+      name: Projectile explosion effect Parameters
+      optionnal: false
+      parameters:
+        projectile:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.ProjectileEffectParameter
+          defaultValue: block,1,STONE
+          description: The projectile must be defined with the following parameters "<block|item|tnt|orb>,<power (decimal number)>[,<material if the projectile is a block or an item ('[]' means it's optional)>]
+          name: projectile
+          optionnal: true
+          uniqueName: projectile
+          value: orb,0.5
+      splitSeparator: ' '
+      uniqueName: Projectile explosion effect Parameters
+  portalExplosion:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.projectileExplosion.ProjectileExplosionEffect
+    name: portalExplosion
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Projectile explosion effect Parameter
+      maxNumberOfSubParams: 1
+      name: Projectile explosion effect Parameters
+      optionnal: false
+      parameters:
+        projectile:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.ProjectileEffectParameter
+          defaultValue: block,1,STONE
+          description: The projectile must be defined with the following parameters "<block|item|tnt|orb>,<power (decimal number)>[,<material if the projectile is a block or an item ('[]' means it's optional)>]
+          name: projectile
+          optionnal: true
+          uniqueName: projectile
+          value: block,0.5,PORTAL
+      splitSeparator: ' '
+      uniqueName: Projectile explosion effect Parameters
+  portalItemExplosion:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.projectileExplosion.ProjectileExplosionEffect
+    name: portalItemExplosion
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Projectile explosion effect Parameter
+      maxNumberOfSubParams: 1
+      name: Projectile explosion effect Parameters
+      optionnal: false
+      parameters:
+        projectile:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.ProjectileEffectParameter
+          defaultValue: block,1,STONE
+          description: The projectile must be defined with the following parameters "<block|item|tnt|orb>,<power (decimal number)>[,<material if the projectile is a block or an item ('[]' means it's optional)>]
+          name: projectile
+          optionnal: true
+          uniqueName: projectile
+          value: item,0.3,portal
+      splitSeparator: ' '
+      uniqueName: Projectile explosion effect Parameters
   spongePath:
     className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.PathBlockEffect
     name: spongePath
@@ -1001,5 +1061,25 @@ effects:
           value: '3'
       splitSeparator: ' '
       uniqueName: params
+  tntExplosion:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.projectileExplosion.ProjectileExplosionEffect
+    name: tntExplosion
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Projectile explosion effect Parameter
+      maxNumberOfSubParams: 1
+      name: Projectile explosion effect Parameters
+      optionnal: false
+      parameters:
+        projectile:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.ProjectileEffectParameter
+          defaultValue: block,1,STONE
+          description: The projectile must be defined with the following parameters "<block|item|tnt|orb>,<power (decimal number)>[,<material if the projectile is a block or an item ('[]' means it's optional)>]
+          name: projectile
+          optionnal: true
+          uniqueName: projectile
+          value: tnt,0.5
+      splitSeparator: ' '
+      uniqueName: Projectile explosion effect Parameters
 playersEffects:
-  bZx_: doubleJump
+  bZx_: portalItemExplosion
