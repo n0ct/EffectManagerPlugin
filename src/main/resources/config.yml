@@ -1081,5 +1081,4 @@ effects:
           value: tnt,0.5
       splitSeparator: ' '
       uniqueName: Projectile explosion effect Parameters
-playersEffects:
-  bZx_: portalItemExplosion
+playersEffects: {}

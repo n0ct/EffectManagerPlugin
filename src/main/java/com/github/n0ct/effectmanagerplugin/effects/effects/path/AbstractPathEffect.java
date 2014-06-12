@@ -44,7 +44,7 @@ public abstract class AbstractPathEffect extends AbstractEffect {
 		}
 		PlayerMoveEvent event = (PlayerMoveEvent)argEvent;
 		//On ne fait rien si le joueur n'a pas l'effet
-		if (!getPlayerName().equals(event.getPlayer().getName()))
+		if (!getPlayerUUID().equals(event.getPlayer().getUniqueId()))
 		{
 			return;
 		}

@@ -62,14 +62,14 @@ public abstract class AbstractJumpEffect extends AbstractEffect {
 	protected final void on(Event event) {
 		if (event instanceof PlayerToggleFlightEvent) {
 			PlayerToggleFlightEvent playerToggleFlightEvent = (PlayerToggleFlightEvent) event;
-			if (playerToggleFlightEvent.getPlayer().getName().equals(getPlayerName())) {
+			if (playerToggleFlightEvent.getPlayer().getUniqueId().equals(getPlayerUUID())) {
 				onPlayerToogleFlightEvent(playerToggleFlightEvent);
 			}
 			
 		}
 		if (event instanceof PlayerMoveEvent) {
 			PlayerMoveEvent playerMoveEvent = (PlayerMoveEvent) event;
-			if (playerMoveEvent.getPlayer().getName().equals(getPlayerName())) {
+			if (playerMoveEvent.getPlayer().getUniqueId().equals(getPlayerUUID())) {
 				onPlayerMoveEvent(playerMoveEvent);
 			}
 		}

@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -28,7 +30,7 @@ import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEven
  */
 public class PlayerEffectManager implements ConfigurationSerializable {
 
-	private Map<String,List<AbstractEffect>> playersEffects;
+	private Map<UUID,List<AbstractEffect>> playersEffects;
 
 	private EffectManager effectManager;
 
@@ -52,16 +54,16 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	}
 	private PlayerEffectManager() {
 		this.plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
-		this.playersEffects = new TreeMap<String,List<AbstractEffect>>();
+		this.playersEffects = new TreeMap<UUID,List<AbstractEffect>>();
 		this.effectManager = plugin.getEffectManager();
 	}
 
 	@Override
 	public Map<String,Object> serialize() {
 		Map<String,Object> map = new TreeMap<String,Object>();
-		for (String playerName : this.playersEffects.keySet()) {
+		for (UUID playerUUID : this.playersEffects.keySet()) {
 			StringBuilder sb = new StringBuilder();
-			List<AbstractEffect> playerEffects = this.playersEffects.get(playerName);
+			List<AbstractEffect> playerEffects = this.playersEffects.get(playerUUID);
 			for (int i = 0; i<playerEffects.size(); i++) {
 				AbstractEffect effect = playerEffects.get(i);
 				sb.append(effect.getName());
@@ -70,7 +72,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 				}
 			}
 			if (playerEffects.size() > 0) {
-				map.put(playerName,sb.toString());
+				map.put(playerUUID.toString(),sb.toString());
 			}
 		}
 		return map;
@@ -79,10 +81,10 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	public PlayerEffectManager(Map<String, Object> map) {
 		this();
 		PlayerEffectManager.instance = this;
-		for (String playerName : map.keySet()) {
-			String[] playerEffects = ((String)map.get(playerName)).split(";");
+		for (String playerUUIDStr : map.keySet()) {
+			String[] playerEffects = ((String)map.get(playerUUIDStr)).split(";");
 			for (int i = 0;i< playerEffects.length;i++) {
-				this.add(playerName, playerEffects[i],false);
+				this.add(UUID.fromString(playerUUIDStr), playerEffects[i],false);
 			}
 		}
 	}
@@ -90,14 +92,14 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	/**
 	 * @return the playersEffects
 	 */
-	public Map<String,List<AbstractEffect>> getPlayersEffects() {
+	public Map<UUID, List<AbstractEffect>> getPlayersEffects() {
 		return playersEffects;
 	}
 	
-	public List<AbstractEffect> getEffectsForPlayer(String playerName) {
-		checkPlayer(playerName);
-		if (playersEffects.containsKey(playerName)) {
-			List<AbstractEffect> effects = playersEffects.get(playerName);
+	public List<AbstractEffect> getEffectsForPlayer(UUID playerUUID) {
+		getPlayer(playerUUID,false);
+		if (playersEffects.containsKey(playerUUID)) {
+			List<AbstractEffect> effects = playersEffects.get(playerUUID);
 			if (effects.size() == 0) {
 				return new ArrayList<AbstractEffect>();
 			}
@@ -106,21 +108,19 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		return new ArrayList<AbstractEffect>();
 	}
 	
-	public void add(String playerName, String effectName) {
-		add(playerName,effectName,true);
+	public void add(UUID playerUUID, String effectName) {
+		add(playerUUID,effectName,true);
 	}
 	
-	public void add(String playerName, String effectName, Boolean checkIfPlayerIsConnected) throws IllegalArgumentException {
-		if (checkIfPlayerIsConnected) {
-			checkPlayer(playerName);
-		}
+	public void add(UUID playerUUID, String effectName, Boolean checkIfPlayerIsConnected) throws IllegalArgumentException {
+		OfflinePlayer player = getPlayer(playerUUID, true);
 		checkEffect(effectName);
 		//verifie que ce type d'effet n'est pas deja attribue au joueur.
 		AbstractEffect effect = (AbstractEffect) this.effectManager.get(effectName);
-		checkEffectTypeDuplication(playerName,effect,false);
+		checkEffectTypeDuplication(player.getPlayer(),effect,false);
 		//recupere et si necessaire cree le(s) eventListener(s) appropries
 		try {
-			effect = effect.applyToPlayer(playerName);
+			effect = effect.applyToPlayer(playerUUID);
 		} catch (CloneNotSupportedException e) {
 			throw new IllegalArgumentException("An error occured during the player's effect creation " + e.getClass().toString() +".");
 		}
@@ -142,18 +142,18 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 
 		
 		//On rempli la map des effets du joueur avec le nouvel effet.
-		if (this.playersEffects.get(playerName) == null) {
-			this.playersEffects.put(playerName,new ArrayList<AbstractEffect>());
+		if (this.playersEffects.get(playerUUID) == null) {
+			this.playersEffects.put(playerUUID,new ArrayList<AbstractEffect>());
 		}
-		this.playersEffects.get(playerName).add(effect);
+		this.playersEffects.get(playerUUID).add(effect);
 		effect.onEnable();
 	}
 	
-	public void del(String playerName, String effectName) {
-		checkPlayer(playerName);
-		AbstractEffect effect = getEffect(playerName, effectName);
+	public void del(final UUID playerUUID, String effectName) {
+		OfflinePlayer player = getPlayer(playerUUID, false);
+		AbstractEffect effect = getEffect(playerUUID, effectName);
 		if (effect == null) {
-			throw new IllegalArgumentException("The effect" + effectName + " were not associated to the player " + playerName + ".");
+			throw new IllegalArgumentException("The effect" + effectName + " were not associated to the player " + player.getName() + ".");
 		}
 		for (Class<? extends AbstractEventListener<?>> eventListenerClass : effect.getNeededEvents()) {
 			AbstractEventListener<?> eventListener = null;
@@ -178,31 +178,43 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 			
 		}
 		effect.onDisable();
-		this.playersEffects.get(playerName).remove(effect);
-	}
-	
-
-
-	public void clear(String playerName) {
-		checkPlayer(playerName);
-		List<AbstractEffect> effects = getEffectsForPlayer(playerName);
-		for (int i = effects.size() - 1 ; i >= 0 ; i--) {
-			this.del(playerName,effects.get(i));
+		final AbstractEffect effectToDelete = effect;
+		int disableDelay = effect.getDisableDelay();
+		if (disableDelay > 0) {
+			runTaskLater(new Runnable() {
+				
+				@Override
+				public void run() {
+					EffectManagerPlugin.getPlugin(EffectManagerPlugin.class).getPlayerEffectManager().getEffectsForPlayer(playerUUID).remove(effectToDelete);
+				}
+			}, effect.getDisableDelay());
+		} else {
+			this.playersEffects.get(playerUUID).remove(effect);
 		}
 	}
 	
-	public void callEffectForPlayer(String playerName, String effectName) {
-		checkPlayer(playerName);
+
+
+	public void clear(UUID playerUUID) {
+		getPlayer(playerUUID,false);
+		List<AbstractEffect> effects = getEffectsForPlayer(playerUUID);
+		for (int i = effects.size() - 1 ; i >= 0 ; i--) {
+			this.del(playerUUID,effects.get(i));
+		}
+	}
+	
+	public void callEffectForPlayer(UUID playerUUID, String effectName) {
+		OfflinePlayer player = getPlayer(playerUUID,true);
 		checkEffect(effectName);
-		AbstractEffect effect = getEffect(playerName, effectName);
+		AbstractEffect effect = getEffect(playerUUID, effectName);
 		if (effect == null) {
-			throw new IllegalArgumentException("The effect " + effectName + " is not associated to the player " + playerName + " so it cannot be executed.");
+			throw new IllegalArgumentException("The effect " + effectName + " is not associated to the player " + player.getName() + " so it cannot be executed.");
 		}
 		effect.call();
 	}
 	
-	public void callEffectsForPlayer(String playerName, List<AbstractEffect> effects) {
-		checkPlayer(playerName);
+	public void callEffectsForPlayer(UUID playerUUID, List<AbstractEffect> effects) {
+		getPlayer(playerUUID, true);
 		if (effects == null || effects.size() == 0) {
 			throw new IllegalArgumentException("No effect to call");
 		}
@@ -211,12 +223,12 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		}
 	}
 	
-	private void del(String playerName, AbstractEffect effect) {
+	private void del(UUID playerUUID, AbstractEffect effect) {
 		try {
 			for (Class<? extends AbstractEventListener<?>> eventListenerClass : effect.getNeededEvents()) {
 				AbstractEventListener<?> eventListener;
 	
-					eventListener = EventListenerManager.getInstance().getEventListener(eventListenerClass);
+				eventListener = EventListenerManager.getInstance().getEventListener(eventListenerClass);
 				EntityDamageEvent.getHandlerList();
 				eventListener.deleteObserver(effect);
 				if (eventListener.countObservers() == 0) {
@@ -230,20 +242,20 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 			e.printStackTrace();
 			throw new IllegalArgumentException("An error occured during the effect deletion: " + e.getClass().toString() +".",e);
 		}
-		getEffectsForPlayer(playerName).remove(effect);;
+		getEffectsForPlayer(playerUUID).remove(effect);;
 	}
 	
-	private void checkEffectTypeDuplication(String playerName, AbstractEffect effect, boolean checkIfPlayerExists) {
-		if (!playersEffects.containsKey(playerName)) {
+	private void checkEffectTypeDuplication(Player player, AbstractEffect effect, boolean checkIfPlayerExists) {
+		if (!playersEffects.containsKey(player.getUniqueId())) {
 			return;
 		}
-		List<AbstractEffect> effects = playersEffects.get(playerName);
+		List<AbstractEffect> effects = playersEffects.get(player.getUniqueId());
 		if (effects == null) {
 			return;
 		}
 		for (AbstractEffect cEffect : effects) {
 			if((cEffect.getType().equals(effect.getType()) && !effect.getType().isStackable())) {
-				throw new IllegalArgumentException("The effect "+cEffect.getName()+" of the same type ("+effect.getType().getName()+") is already associated to the player "+playerName+".");
+				throw new IllegalArgumentException("The effect "+cEffect.getName()+" of the same type ("+effect.getType().getName()+") is already associated to the player "+player.getName()+".");
 			}
 		}
 	}
@@ -254,11 +266,11 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		}
 	}
 	
-	private AbstractEffect getEffect(String playerName, String effectName) {
-		if (!this.playersEffects.containsKey(playerName)) {
+	public AbstractEffect getEffect(UUID playerUUID, String effectName) {
+		if (!this.playersEffects.containsKey(playerUUID)) {
 			return null;
 		}
-		List <AbstractEffect> effects = this.playersEffects.get(playerName);
+		List <AbstractEffect> effects = this.playersEffects.get(playerUUID);
 		for (AbstractEffect effect : effects) {
 			if (effect.getName().equals(effectName)) {
 				return effect;
@@ -267,24 +279,43 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		return null;
 	}
 	
-	private void checkPlayer(String playerName) {
-		if (!playerExists(playerName)) {
-			throw new IllegalArgumentException("player " + playerName + " doesn't exist");
+	public OfflinePlayer getPlayer(UUID playerUUID, boolean checkIfPlayerIsOnline) {
+		OfflinePlayer offlinePlayer = getOfflinePlayer(playerUUID);
+		StringBuilder sb = new StringBuilder("The player ");
+		if (offlinePlayer == null) {
+			sb.append("with the UniqueID: \'").append(playerUUID.toString()).append("\' doesn't exist.");
+			throw new IllegalArgumentException(sb.toString());
 		}
+		if (checkIfPlayerIsOnline && !offlinePlayer.isOnline()) {
+			sb.append(offlinePlayer.getName()).append(" is not connected.");
+			throw new IllegalArgumentException(sb.toString());
+		}
+		return offlinePlayer;
 	}
 	
+	public boolean isPlayerOffline(UUID playerUUID) {
+		return getOfflinePlayer(playerUUID) == null ? false : true;
+	}
 
-
-	private boolean playerExists(String name) {
-		return getPlayer(name) == null ? false : true;
+	public boolean isPlayerOnline(UUID playerUUID) {
+		return getOnlinePlayer(playerUUID) == null ? false : true;
 	}
 	
-    public Player getPlayer(String name) {
+    public Player getOnlinePlayer(UUID playerUUID) {
 	    for(Player p : Bukkit.getOnlinePlayers()) {
-		    if(p.getName().equalsIgnoreCase(name))
+		    if(p.getUniqueId().equals(playerUUID))
 		    	return p;
 		    }
 	    return null;
+    }
+    
+    public OfflinePlayer getOfflinePlayer(UUID playerUUID) {
+    	for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
+    		if (p.getUniqueId().equals(playerUUID)) {
+    			return p;
+    		}
+    	}
+    	return null;
     }
 
 	public BukkitScheduler getScheduler() {
@@ -306,8 +337,8 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	}
 
 	public void clear() {
-		Set<String> players = this.playersEffects.keySet();
-		for (String player : players) {
+		Set<UUID> players = this.playersEffects.keySet();
+		for (UUID player : players) {
 			this.clear(player);
 		}
 	}

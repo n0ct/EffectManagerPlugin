@@ -78,7 +78,7 @@ public class EffectAttackerEffect extends AbstractEffect {
 			return;
 		}
 		Player victim = (Player) entityDamageByEntityEvent.getEntity();
-		if (!victim.getName().equals(getPlayerName())) {
+		if (!victim.getUniqueId().equals(getPlayerUUID())) {
 			return;
 		}
 		doEffect(entityDamageByEntityEvent.getDamager());

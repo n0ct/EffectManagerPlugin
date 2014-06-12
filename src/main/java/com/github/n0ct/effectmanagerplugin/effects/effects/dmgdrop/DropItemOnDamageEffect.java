@@ -70,7 +70,7 @@ public class DropItemOnDamageEffect extends AbstractEffect {
 			return;
 		}
 		Player player = (Player) entity;
-		if (!player.getName().equals(getPlayerName())) {
+		if (!player.getUniqueId().equals(getPlayerUUID())) {
 			return;
 		}
 		EffectParameters effects = (EffectParameters) getParameters().getSubParameters().get(0);

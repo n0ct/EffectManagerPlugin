@@ -107,7 +107,9 @@ public class EffectManager implements ConfigurationSerializable {
 	}
 	
 	public void remove(String effectName) {
-		if (!this.effects.containsKey(effectName)) throw new IllegalArgumentException("The effect named " + effectName + " doesn't exist.");
+		if (!this.effects.containsKey(effectName)) {
+			throw new IllegalArgumentException("The effect named " + effectName + " doesn't exist.");
+		}
 		for (List<AbstractEffect> appliedEffects : plugin.getPlayerEffectManager().getPlayersEffects().values()) {
 			for (AbstractEffect appliedEffect : appliedEffects) {
 				if (appliedEffect.getName() == plugin.getEffectManager().get(effectName).getName()) {

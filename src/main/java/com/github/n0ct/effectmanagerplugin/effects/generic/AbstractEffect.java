@@ -27,13 +27,15 @@ import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectPara
 
 public abstract class AbstractEffect implements Observer, Cloneable, ConfigurationSerializable {
 
+	public static final String UNFINDABLE_SPLIT_PARAMETER = "-----------";
+
 	protected static ArrayList<Class<? extends AbstractEventListener<?>>> NEEDED_EVENTS_LISTENERS;
 	
 	private EffectParameters effectParameter;
 	
 	private String name;
 	
-	private String playerName;
+	private UUID playerUUID;
 	
 
 	public abstract EffectType getType();
@@ -90,7 +92,7 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 	public abstract ArrayList<Class<? extends AbstractEventListener<?>>> getNeededEvents();
 	
 	public final void call() {
-		if (getPlayerName() == null) {
+		if (getPlayerUUID() == null) {
 			throw new IllegalArgumentException("effect " +getName()+ " cannot be called since it is not associated to a player.");
 		}
 		onCall();
@@ -127,20 +129,20 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 
 	protected abstract String getDescription();
 
-	public final AbstractEffect applyToPlayer(String playerName) throws CloneNotSupportedException {
+	public final AbstractEffect applyToPlayer(UUID playerUUID) throws CloneNotSupportedException {
 		AbstractEffect newEffect = null;
 		newEffect = (AbstractEffect) this.clone();
 		
-		newEffect.setPlayerName(playerName);
+		newEffect.setPlayerUUID(playerUUID);
 		return newEffect;
 	}
 
-	private void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	private void setPlayerUUID(UUID playerUUID) {
+		this.playerUUID = playerUUID;
 	}
 
-	public String getPlayerName() {
-		return playerName;
+	public UUID getPlayerUUID() {
+		return playerUUID;
 	}
 	
 	protected final void runTaskLater(Runnable runnable, int duration) {
@@ -148,7 +150,7 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 	}
 
 	protected final Player getPlayer() {
-		return PlayerEffectManager.getInstance().getPlayer(getPlayerName());
+		return PlayerEffectManager.getInstance().getOnlinePlayer(playerUUID);
 	}
 
 	public static AbstractEffect deserialize(Map<String,Object> map) {
@@ -195,5 +197,9 @@ public abstract class AbstractEffect implements Observer, Cloneable, Configurati
 	public void onDisable() {}
 	
 	public void onEnable() {}
+
+	public int getDisableDelay() {
+		return 0;
+	}
 
 }

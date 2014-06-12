@@ -114,6 +114,7 @@ public class EffectCommandExecutor extends AbstractCommandExecutor implements Co
 
 	public boolean effectDefinition(Player player, String[] newArgs, boolean showPrefix) {
 		if (!checkEffectExists(player, newArgs[0])) {
+			MessageSender.sendErrorMessage(player, "The effect " + newArgs[0] + " doesn't exist.");
 			return true;
 		}
 
@@ -161,7 +162,6 @@ public class EffectCommandExecutor extends AbstractCommandExecutor implements Co
 
 	private boolean checkEffectExists(Player player, String effectName) {
 		if (StringUtils.isBlank(effectName) || !plugin.getEffectManager().contains(effectName)) {
-			MessageSender.sendErrorMessage(player,"The effect "+effectName+" doesn't exist.");
 			return false;
 		}
 		return true;

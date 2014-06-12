@@ -2,6 +2,7 @@ package com.github.n0ct.effectmanagerplugin.commands.subcommands;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.Command;
@@ -70,15 +71,21 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			MessageSender.sendErrorMessage(player, "Usage: /emplayer clear <playerName>");
 			return true;
 		}
-		
-		List<AbstractEffect> effects = plugin.getPlayerEffectManager().getEffectsForPlayer(newArgs[0]);
+		UUID playerUUID = null;
+		try {
+			playerUUID = getPlayerUUID(newArgs[0],false);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player, e.getMessage());
+			return true;
+		}
+		List<AbstractEffect> effects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
 		
 		if (effects.size() == 0) {
 			MessageSender.sendErrorMessage(player, "Player "+ newArgs[0] +" doesn't have any effect.");
 			return true;
 		}
 		
-		plugin.getPlayerEffectManager().clear(newArgs[0]);
+		plugin.getPlayerEffectManager().clear(playerUUID);
 		MessageSender.sendSuccessMessage(player, "Effects cleared from " + newArgs[0] + ".");
 		return true;
 	}
@@ -89,14 +96,16 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			return true;
 		}
 		MessageSender.sendInformationMessage(player, "Players effects:");
-		for (String playerName : plugin.getPlayerEffectManager().getPlayersEffects().keySet()) {
+		for (UUID playerUUID : plugin.getPlayerEffectManager().getPlayersEffects().keySet()) {
+			String playerName = getPlayerName(playerUUID);
 			MessageSender.sendInformationMessage(player, playerName, false);
-			for (AbstractEffect effect : plugin.getPlayerEffectManager().getEffectsForPlayer(playerName)) {
+			for (AbstractEffect effect : plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID)) {
 				MessageSender.sendInformationMessage(player, " |=> " + effect.getName(), false);
 			}
 		}
 		return true;
 	}
+
 
 	public boolean playerDetails(Player player, String[] newArgs) {
 		
@@ -111,9 +120,16 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 				targetPlayerName = newArgs[0];
 			}
 		}
+		UUID playerUUID = null;
+		try {
+			playerUUID = getPlayerUUID(targetPlayerName);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player, e.getMessage());
+		}
+		
 		List<AbstractEffect> effects = null;
 		try {
-			effects = plugin.getPlayerEffectManager().getEffectsForPlayer(targetPlayerName);
+			effects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
 		} catch (IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
 			return true;
@@ -146,15 +162,22 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			MessageSender.sendErrorMessage(player, "Usage: /emplayer del <playerName> <effectName>");
 			return true;
 		}
+
+		UUID playerUUID = null;
+		try {
+			playerUUID = getPlayerUUID(newArgs[0]);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player, e.getMessage());
+		}
 		
-		List<AbstractEffect> effects = plugin.getPlayerEffectManager().getEffectsForPlayer(newArgs[0]);
+		List<AbstractEffect> effects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
 		
 		if (effects.size() == 0) {
 			MessageSender.sendErrorMessage(player, "Player "+ newArgs[0] +" doesn't have any effect. Cannot delete the effect " + newArgs[1] + ".");
 			return true;
 		}
 		try {
-			plugin.getPlayerEffectManager().del(newArgs[0], newArgs[1]);
+			plugin.getPlayerEffectManager().del(playerUUID, newArgs[1]);
 		} catch (IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
 			return true;
@@ -168,8 +191,18 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			MessageSender.sendErrorMessage(player, "Usage: /emplayer add <playerName> <effectName>");
 			return true;
 		}
+		
+
+		UUID playerUUID = null;
 		try {
-			plugin.getPlayerEffectManager().add(newArgs[0], newArgs[1]);
+			playerUUID = getPlayerUUID(newArgs[0]);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player, e.getMessage());
+			return true;
+		}
+		
+		try {
+			plugin.getPlayerEffectManager().add(playerUUID, newArgs[1]);
 		} catch(IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
 			return true;

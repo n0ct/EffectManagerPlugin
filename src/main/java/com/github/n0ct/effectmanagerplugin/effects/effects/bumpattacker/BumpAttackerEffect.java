@@ -77,7 +77,7 @@ public class BumpAttackerEffect extends AbstractEffect {
 			return;
 		}
 		Player victim = (Player) entityDamageByEntityEvent.getEntity();
-		if (!victim.getName().equals(getPlayerName())) {
+		if (!victim.getUniqueId().equals(getPlayerUUID())) {
 			return;
 		}
 		doBumps(entityDamageByEntityEvent.getDamager());

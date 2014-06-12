@@ -2,6 +2,7 @@ package com.github.n0ct.effectmanagerplugin.commands.subcommands;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -52,8 +53,15 @@ public class CallEffectCommandExecutor extends AbstractCommandExecutor implement
 				effectName = args[0];
 			}
 		}
-
-		List<AbstractEffect> playerEffects = plugin.getPlayerEffectManager().getEffectsForPlayer(targetPlayerName);
+		UUID playerUUID = null;
+		try {
+			playerUUID = getPlayerUUID(targetPlayerName);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player,e.getMessage());
+			return true;
+		}
+			
+		List<AbstractEffect> playerEffects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
 		List<AbstractEffect> effectsToCall = new ArrayList<AbstractEffect>();
 		if (effectName != null) {
 			for (AbstractEffect ceffect : playerEffects) {
@@ -81,7 +89,7 @@ public class CallEffectCommandExecutor extends AbstractCommandExecutor implement
 			}
 		}
 		try {
-			plugin.getPlayerEffectManager().callEffectsForPlayer(targetPlayerName, effectsToCall);
+			plugin.getPlayerEffectManager().callEffectsForPlayer(playerUUID, effectsToCall);
 		} catch (IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
 			e.printStackTrace();
