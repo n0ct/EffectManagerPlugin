@@ -19,6 +19,7 @@ import com.github.n0ct.effectmanagerplugin.effects.generic.AbstractEffect;
 public class PlayerEffectCommandExecutor extends AbstractCommandExecutor implements CommandExecutor{
 
 	public static final String COMMAND = "player";
+	public static final String SHORT_COMMAND = "p";
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
 	private static final String PLAYER_ADD_CMD = "add";
 	private static final String PLAYER_DEL_CMD = "del";
@@ -195,6 +196,7 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 	private boolean playerAdd(Player player, String[] newArgs) {
 		if (newArgs.length < 2) {
 			MessageSender.sendErrorMessage(player, "Usage: /emplayer add <playerName> <effectName>");
+			showEffectList(player);
 			return true;
 		}
 		
@@ -204,6 +206,7 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			playerUUID = getPlayerUUID(newArgs[0]);
 		} catch (IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
+			showEffectList(player);
 			return true;
 		}
 		
@@ -211,11 +214,27 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			plugin.getPlayerEffectManager().add(playerUUID, newArgs[1]);
 		} catch(IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
+			showEffectList(player);
 			return true;
 		}
 		
 		MessageSender.sendSuccessMessage(player, "Effect " + newArgs[1] + " added to player " + newArgs[0] + "." );
 		return true;
+	}
+	
+	public boolean showEffectList(Player player) {
+		if (this.plugin.getEffectManager().getAll().size() > 0) {
+			MessageSender.sendInformationMessage(player, "Available effects:");
+			StringBuilder sb = new StringBuilder();
+			for(String effect : this.plugin.getEffectManager().getAll()) {
+				sb.append(effect + " ");
+			}
+			MessageSender.sendInformationMessage(player, sb.toString());
+			return true;
+		}
+		MessageSender.sendInformationMessage(player, "No Available effects.");
+		MessageSender.sendInformationMessage(player, "First you have to use \'/em effect add\' command to create new effects before to apply them on players.");
+		return false;
 	}
 
 	public void showHelp(Player player, String[] newArgs) {

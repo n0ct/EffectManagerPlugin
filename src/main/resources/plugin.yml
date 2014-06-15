@@ -13,8 +13,14 @@
       emplayer:
         description: Manages the effects associated to a player.
         usage: /emplayer add | del | clear | details | list
+      emp:
+        description: A shortcut for the emplayer command. Manages the effects associated to a player.
+        usage: /emplayer add | del | clear | details | list
       emeffect:
         description: Manages effects definition.
+        usage: /emeffect classes | help | list | details | add | del
+      eme:
+        description: A shortcut for the emeffect command. Manages effects definition.
         usage: /emeffect classes | help | list | details | add | del
       emcall:
         description: Call an effect directly

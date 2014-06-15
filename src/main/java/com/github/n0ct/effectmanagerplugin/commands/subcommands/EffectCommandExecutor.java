@@ -16,6 +16,7 @@ import com.github.n0ct.effectmanagerplugin.effects.generic.AbstractEffect;
 public class EffectCommandExecutor extends AbstractCommandExecutor implements CommandExecutor {
 
 	public static final String COMMAND = "effect";
+	public static final String SHORT_COMMAND = "e";
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
 	
 	private static final String EFFECT_CLASSES_CMD = "classes";

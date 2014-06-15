@@ -64,7 +64,9 @@ public class EMCommandExecutor implements CommandExecutor {
 		plugin.getCommand(COMMAND).setExecutor(this);
 		plugin.getCommand(COMMAND + InfoEffectCommandExecutor.COMMAND).setExecutor(this.infoEffectCommandExecutor);
 		plugin.getCommand(COMMAND + PlayerEffectCommandExecutor.COMMAND).setExecutor(this.playerEffectCommandExecutor);
+		plugin.getCommand(COMMAND + PlayerEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.playerEffectCommandExecutor);
 		plugin.getCommand(COMMAND + EffectCommandExecutor.COMMAND).setExecutor(this.effectCommandExecutor);
+		plugin.getCommand(COMMAND + EffectCommandExecutor.SHORT_COMMAND).setExecutor(this.effectCommandExecutor);
 		plugin.getCommand(COMMAND + CallEffectCommandExecutor.COMMAND).setExecutor(this.callEffectCommandExecutor);
 		plugin.getCommand(COMMAND + HelpEffectCommandExecutor.COMMAND).setExecutor(this.helpEffectCommandExecutor);
 		plugin.getCommand(COMMAND + ListEffectCommandExecutor.COMMAND).setExecutor(this.listEffectCommandExecutor);
@@ -86,10 +88,10 @@ public class EMCommandExecutor implements CommandExecutor {
 		if (args.length >= 1 && args[0].equals(InfoEffectCommandExecutor.COMMAND)) {
 			return infoEffectCommandExecutor.onCommand(player, command, label, newArgs);
 		}
-		if (args.length >= 1 && args[0].equals(PlayerEffectCommandExecutor.COMMAND)) {
+		if (args.length >= 1 && (args[0].equals(PlayerEffectCommandExecutor.COMMAND) || args[0].equals(PlayerEffectCommandExecutor.SHORT_COMMAND))) {
 			return playerEffectCommandExecutor.onCommand(player, command, label, newArgs);
 		}
-		if (args.length >= 1 && args[0].equals(EffectCommandExecutor.COMMAND)) {
+		if (args.length >= 1 && (args[0].equals(EffectCommandExecutor.COMMAND) || args[0].equals(EffectCommandExecutor.SHORT_COMMAND))) {
 			return effectCommandExecutor.onCommand(player, command, label, newArgs);
 		}
 		if (args.length >= 1 && args[0].equals(CallEffectCommandExecutor.COMMAND)) {
