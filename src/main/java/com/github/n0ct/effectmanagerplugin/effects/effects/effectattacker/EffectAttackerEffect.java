@@ -185,11 +185,11 @@ public class EffectAttackerEffect extends AbstractEffect {
 		EffectParameters ret = new EffectParameters("Effect Attacker Parameters","params","Effect Attacker Effect Parameters.", true, " ", 0);
 		EffectParameters paramEffects = new EffectParameters("Effects","Effects","The list of the effects ';' .", true, ";", 0);
 		EffectParameters paramEffect = new EffectParameters("Effect","Effect"+EffectParameters.ITERATION_PARAMETER+ "0","The effect parameters ','.", true, ",", 4);
-		PotionEffectTypeEffectParameter effect = new PotionEffectTypeEffectParameter("Effect type","effect","defines the Effect Type witch will be applied to the player.",true,PotionEffectType.CONFUSION);
+		PotionEffectTypeEffectParameter effect = new PotionEffectTypeEffectParameter("Effect type","effect","defines the Effect Type which will be applied to the player.",true,PotionEffectType.CONFUSION);
 		paramEffect.addSubEffectParameter(effect);
-		IntegerEffectParameter duration = new IntegerEffectParameter("Effect duration","duration","defines the duration of the effect witch will be applied to the player.",true,10, 1, 2000);
+		IntegerEffectParameter duration = new IntegerEffectParameter("Effect duration","duration","defines the duration of the effect which will be applied to the player.",true,10, 1, 2000);
 		paramEffect.addSubEffectParameter(duration);
-		IntegerEffectParameter amplifier = new IntegerEffectParameter("Effect amplifier","amplifier","defines the amplifier for the effect witch will be applied to the player.",true,1, 1, 100);
+		IntegerEffectParameter amplifier = new IntegerEffectParameter("Effect amplifier","amplifier","defines the amplifier for the effect which will be applied to the player.",true,1, 1, 100);
 		paramEffect.addSubEffectParameter(amplifier);
 		IntegerEffectParameter delay = new IntegerEffectParameter("Delay", "delay", "the delay before the effect will be applied to the player.", true, 0, 0, 2000);
 		paramEffect.addSubEffectParameter(delay);
@@ -205,7 +205,7 @@ public class EffectAttackerEffect extends AbstractEffect {
 
 	@Override
 	protected String getDescription() {
-		return "Apply effects on the player witch is attacking the player or the player himself if called dirrectly.\n"
+		return "Apply effects on the player which is attacking the player or the player himself if called dirrectly.\n"
 				+ "The first parameter ('Effects') can contains many 'Effect' parameters to let you apply many effect one after the other.\n"
 				+"Each effect paramater must be separated by ';' and can contain 4 parameters (these 4 parameters must be separated by ','):\n"
 				+"'Effect type' contains the type (id or string) of the effect. 'Effect duration' defines the duration of the effect.\n"

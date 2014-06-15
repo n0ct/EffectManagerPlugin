@@ -80,7 +80,7 @@ public abstract class AbstractPrimitiveEffectParameter<T> extends AbstractEffect
 	
 	public final void setDefaultValue(T value) {
 		if (!isValid(value)) {
-			throw new IllegalArgumentException("[INTERNAL ERROR] Effect definition is invalid: the parameter "+getName()+" contain the default value "+value+" witch is invalid.");
+			throw new IllegalArgumentException("[INTERNAL ERROR] Effect definition is invalid: the parameter "+getName()+" contain the default value "+value+" which is invalid.");
 		}
 		this.defaultValue = value;
 	}

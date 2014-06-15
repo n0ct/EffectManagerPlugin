@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import com.github.n0ct.effectmanagerplugin.effects.effects.SavedBlock;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
@@ -39,9 +40,9 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 		final World world = player.getWorld();
 
 		final int radius = getRadius();
-		final ArrayList<PathSavedBlock> savedBlocks;
-			savedBlocks = new ArrayList<PathSavedBlock>();
-		final PathSavedBlock origin = new PathSavedBlock(world.getBlockAt((int)from.getBlockX(), (int)(int)from.getBlockY()-1,(int)from.getBlockZ()));
+		final ArrayList<SavedBlock> savedBlocks;
+			savedBlocks = new ArrayList<SavedBlock>();
+		final SavedBlock origin = new SavedBlock(world.getBlockAt((int)from.getBlockX(), (int)(int)from.getBlockY()-1,(int)from.getBlockZ()));
 		
 		//on met dans une liste les  blocks à modifier
 		final int startX = origin.getLocation().getBlockX();
@@ -60,13 +61,13 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 				for (int z=minZ;z<=maxZ;z++) {
 					Vector pt = new Vector(x,y,z);
 					if (pt.toVector2D().subtract(center).divide(radius).lengthSq() <= 1) {
-						PathSavedBlock pathSavedBlock = new PathSavedBlock(world.getBlockAt(x, y, z));
-						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(pathSavedBlock.getType()) || getMaterials().contains(pathSavedBlock.getType()))) {
-							Block upBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+1,pathSavedBlock.getLocation().getBlockZ());
-							Block upperpBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+2,pathSavedBlock.getLocation().getBlockZ());
+						SavedBlock savedBlock = new SavedBlock(world.getBlockAt(x, y, z));
+						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(savedBlock.getType()) || getMaterials().contains(savedBlock.getType()))) {
+							Block upBlock = world.getBlockAt(savedBlock.getLocation().getBlockX(),savedBlock.getLocation().getBlockY()+1,savedBlock.getLocation().getBlockZ());
+							Block upperpBlock = world.getBlockAt(savedBlock.getLocation().getBlockX(),savedBlock.getLocation().getBlockY()+2,savedBlock.getLocation().getBlockZ());
 							if ((upBlock.getType() == Material.AIR || upBlock.getType() == Material.SNOW) && (upperpBlock.getType() == Material.AIR)) {
-								savedBlocks.add(pathSavedBlock);
-								savedBlocks.add(new PathSavedBlock(upBlock));
+								savedBlocks.add(savedBlock);
+								savedBlocks.add(new SavedBlock(upBlock));
 							}
 						}
 					}
@@ -79,7 +80,7 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 				Block upperpBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+2,origin.getLocation().getBlockZ());
 				if ((upBlock.getType() == Material.AIR || upBlock.getType() == Material.SNOW) && (upperpBlock.getType() == Material.AIR)) {
 					savedBlocks.add(origin);
-					savedBlocks.add(new PathSavedBlock(upBlock));
+					savedBlocks.add(new SavedBlock(upBlock));
 				}
 			}
 		}
@@ -87,28 +88,28 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 		//On programme la remise en place des blocs a leur etat d'origine
 		runTaskLater(new Runnable() {
 			public void run() {
-				for (PathSavedBlock pathSavedBlock : savedBlocks) {
-						player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setTypeIdAndData(pathSavedBlock.getType().getId(), pathSavedBlock.getData(), false);
+				for (SavedBlock savedBlock : savedBlocks) {
+						player.getWorld().getBlockAt(savedBlock.getLocation()).setTypeIdAndData(savedBlock.getType().getId(), savedBlock.getData(), false);
 				}
 			}
 		},getDelay()*17);
 		
 		//On remplace le(s) block(s) sous ses pieds et le bloc au dessus
-		for (PathSavedBlock pathSavedBlock : savedBlocks) {
-			if (pathSavedBlock.getLocation().getBlockY() == y) {
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setTypeIdAndData(supportingMaterial.getId(), (byte)0,true);
+		for (SavedBlock savedBlock : savedBlocks) {
+			if (savedBlock.getLocation().getBlockY() == y) {
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setTypeIdAndData(supportingMaterial.getId(), (byte)0,true);
 			} else {
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setTypeIdAndData(growingMaterial.getId(), (byte)0, false);
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setTypeIdAndData(growingMaterial.getId(), (byte)0, false);
 				//On programme l'evolution du ble
 				for(int i=1;i<8;i++) {
-		    		runTaskLater(new DataModifier(world, pathSavedBlock.getLocation(), i), getDelay()*i);
+		    		runTaskLater(new DataModifier(world, savedBlock.getLocation(), i), getDelay()*i);
 				}
 				//On programme la regression du ble
 				for(int i=7;i>=0;i--) {
-		    		runTaskLater(new DataModifier(world, pathSavedBlock.getLocation(), i), getDelay()*8 + getDelay()*(8-i));
+		    		runTaskLater(new DataModifier(world, savedBlock.getLocation(), i), getDelay()*8 + getDelay()*(8-i));
 				}
 			}
-			player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData((byte)0, false);
+			player.getWorld().getBlockAt(savedBlock.getLocation()).setData((byte)0, false);
 		}
 
 	}
@@ -125,7 +126,7 @@ public class GrowPathBlockEffect extends AbstractPathBlockEffect {
 	public EffectParameters getDefaultParameters() {
 		EffectParameters ret = new EffectParameters("effect Parameters","params","Path Block Effect Parameters", false, " ", 3);
 		EffectParameters paramBlocks = new EffectParameters("Blocks","blocks","Some blocks separated by ','.", false, ",", 2);
-		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "supportingblock", "Block witch will appear under players's steps.", true, Material.SOIL);
+		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "supportingblock", "Block which will appear under players's steps.", true, Material.SOIL);
 		paramBlocks.addSubEffectParameter(block1);
 		MaterialEffectParameter block2 = new MaterialEffectParameter("Block", "growingblock", "Block where plants will grow.", true, Material.CROPS);
 		paramBlocks.addSubEffectParameter(block2);

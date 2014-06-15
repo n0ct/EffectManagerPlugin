@@ -1,10 +1,10 @@
-package com.github.n0ct.effectmanagerplugin.effects.effects.path.block;
+package com.github.n0ct.effectmanagerplugin.effects.effects;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-public class PathSavedBlock {
+public class SavedBlock {
 
 	final private Location location;
 	final private byte data;
@@ -23,10 +23,15 @@ public class PathSavedBlock {
 	}
 
 	@SuppressWarnings("deprecation")
-	public PathSavedBlock(Block block) {
+	public SavedBlock(Block block) {
 		this.data = block.getData();
 		this.location = block.getLocation();
 		this.type = block.getType();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void reinitBlock() {
+		location.getBlock().setTypeIdAndData(type.getId(), data, false);
 	}
 	
 }

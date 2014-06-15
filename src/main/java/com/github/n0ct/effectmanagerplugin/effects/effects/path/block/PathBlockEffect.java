@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import com.github.n0ct.effectmanagerplugin.effects.effects.SavedBlock;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
@@ -40,9 +41,9 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 		final World world = player.getWorld();
 
 		final int radius = getRadius();
-		final ArrayList<PathSavedBlock> savedBlocks;
-			savedBlocks = new ArrayList<PathSavedBlock>();
-		final PathSavedBlock origin = new PathSavedBlock(world.getBlockAt((int)from.getBlockX(), (int)(int)from.getBlockY()-1,(int)from.getBlockZ()));
+		final ArrayList<SavedBlock> savedBlocks;
+			savedBlocks = new ArrayList<SavedBlock>();
+		final SavedBlock origin = new SavedBlock(world.getBlockAt((int)from.getBlockX(), (int)(int)from.getBlockY()-1,(int)from.getBlockZ()));
 		
 		//on met dans une liste les  blocks à modifier
 		final int startX = origin.getLocation().getBlockX();
@@ -59,18 +60,18 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 				for (int z=minZ;z<=maxZ;z++) {
 					Vector pt = new Vector(x,y,z);
 					if (pt.toVector2D().subtract(center).divide(radius).lengthSq() <= 1) {
-						PathSavedBlock pathSavedBlock = new PathSavedBlock(world.getBlockAt(x, y, z));
-						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(pathSavedBlock.getType()) ||
-								getMaterials().contains(pathSavedBlock.getType()))) {
-							Block upBlock = world.getBlockAt(pathSavedBlock.getLocation().getBlockX(),pathSavedBlock.getLocation().getBlockY()+1,pathSavedBlock.getLocation().getBlockZ());
+						SavedBlock savedBlock = new SavedBlock(world.getBlockAt(x, y, z));
+						if (!(AbstractPathBlockEffect.UNMODIFIED_BLOCK_TYPES.contains(savedBlock.getType()) ||
+								getMaterials().contains(savedBlock.getType()))) {
+							Block upBlock = world.getBlockAt(savedBlock.getLocation().getBlockX(),savedBlock.getLocation().getBlockY()+1,savedBlock.getLocation().getBlockZ());
 							if (upBlock.getType() == Material.AIR) {
-								savedBlocks.add(pathSavedBlock);
+								savedBlocks.add(savedBlock);
 							} else {
 								if (upBlock.getType() == Material.SNOW) {
 									Block upperBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+2,origin.getLocation().getBlockZ());
 									if (upperBlock.getType() == Material.AIR) {
-										savedBlocks.add(pathSavedBlock);
-										savedBlocks.add(new PathSavedBlock(upBlock));
+										savedBlocks.add(savedBlock);
+										savedBlocks.add(new SavedBlock(upBlock));
 									}
 								}
 							}
@@ -89,7 +90,7 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 						Block upperBlock = world.getBlockAt(origin.getLocation().getBlockX(),origin.getLocation().getBlockY()+2,origin.getLocation().getBlockZ());
 						if (upperBlock.getType() == Material.AIR) {
 							savedBlocks.add(origin);
-							savedBlocks.add(new PathSavedBlock(upBlock));
+							savedBlocks.add(new SavedBlock(upBlock));
 						}
 					}
 				}
@@ -100,22 +101,22 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 		//On programme la remise en place des blocs a leur etat d'origine
 		runTaskLater(new Runnable() {
 			public void run() {
-				for (PathSavedBlock pathSavedBlock : savedBlocks) {
-					player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setType(pathSavedBlock.getType());
-					player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData(pathSavedBlock.getData(), false);
+				for (SavedBlock savedBlock : savedBlocks) {
+					player.getWorld().getBlockAt(savedBlock.getLocation()).setType(savedBlock.getType());
+					player.getWorld().getBlockAt(savedBlock.getLocation()).setData(savedBlock.getData(), false);
 				}
 			}
 		},getDelay());
 		
 		//On remplace le(s) block(s) sous ses pieds 
-		for (PathSavedBlock pathSavedBlock : savedBlocks) {
-			if (pathSavedBlock.getLocation().getY() == y) {
+		for (SavedBlock savedBlock : savedBlocks) {
+			if (savedBlock.getLocation().getY() == y) {
 				Material material = getMaterials().get(rdm.nextInt(getMaterials().size()));
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setType(material);
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData((byte)0, false);
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setType(material);
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setData((byte)0, false);
 			} else {
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setType(Material.AIR);
-				player.getWorld().getBlockAt(pathSavedBlock.getLocation()).setData((byte)0, false);
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setType(Material.AIR);
+				player.getWorld().getBlockAt(savedBlock.getLocation()).setData((byte)0, false);
 			}
 		}
 
@@ -127,7 +128,7 @@ public class PathBlockEffect extends AbstractPathBlockEffect {
 	public EffectParameters getDefaultParameters() {
 		EffectParameters ret = new EffectParameters("effect Parameters","params","Path Block Effect Parameters", false, " ", 3);
 		EffectParameters paramBlocks = new EffectParameters("Blocks","blocks","Some blocks separated by ','.", false, ",", 0);
-		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "block" + EffectParameters.ITERATION_PARAMETER + "0", "Block witch will appear under players's steps.", true, Material.GOLD_BLOCK);
+		MaterialEffectParameter block1 = new MaterialEffectParameter("Block", "block" + EffectParameters.ITERATION_PARAMETER + "0", "Block which will appear under players's steps.", true, Material.GOLD_BLOCK);
 		paramBlocks.addSubEffectParameter(block1);
 		ret.addSubEffectParameter(paramBlocks);
 		IntegerEffectParameter radius = new IntegerEffectParameter("Radius","radius","Radius of block modification.", true, 1, 1, 10);

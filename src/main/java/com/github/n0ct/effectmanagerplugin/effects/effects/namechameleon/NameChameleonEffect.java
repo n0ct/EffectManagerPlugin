@@ -198,7 +198,7 @@ public class NameChameleonEffect extends AbstractEffect {
 
 	@Override
 	protected String getDescription() {
-		StringBuilder sb = new StringBuilder("Apply changes on the player's name while the player is witch attacking the player or the player himself if called dirrectly.\n");
+		StringBuilder sb = new StringBuilder("Apply changes on the player's name while the player is which attacking the player or the player himself if called dirrectly.\n");
 		sb.append("The first parameter ('nameChanges') can contain many 'nameChange' parameters to let you apply many changes to the name of the player one after the other.\n");
 		sb.append("Each nameChange paramater must be separated by ';' and can contain 3 parameters (these 3 parameters must be separated by ','):\n");
 		sb.append("'Color' contains ChatColors which will be added before the player's name.\n");

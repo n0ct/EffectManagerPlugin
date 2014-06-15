@@ -103,9 +103,11 @@ public class EffectCommandExecutor extends AbstractCommandExecutor implements Co
 	private boolean effectList(Player player) {
 		if (this.plugin.getEffectManager().getAll().size() > 0) {
 			MessageSender.sendInformationMessage(player, "Available effects:");
+			StringBuilder sb = new StringBuilder();
 			for(String effect : this.plugin.getEffectManager().getAll()) {
-				MessageSender.sendInformationMessage(player, effect);
+				sb.append(effect + " ");
 			}
+			MessageSender.sendInformationMessage(player, sb.toString());
 		} else {
 			MessageSender.sendInformationMessage(player, "No Available effects.");
 		}

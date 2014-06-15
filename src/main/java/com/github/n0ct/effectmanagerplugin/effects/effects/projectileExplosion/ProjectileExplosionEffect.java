@@ -4,14 +4,14 @@
 package com.github.n0ct.effectmanagerplugin.effects.effects.projectileExplosion;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -24,7 +24,6 @@ import com.github.n0ct.effectmanagerplugin.effects.listener.generic.AbstractEven
 import com.github.n0ct.effectmanagerplugin.effects.parameters.ProjectileEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
 import com.stirante.MoreProjectiles.event.CustomProjectileHitEvent;
-import com.stirante.MoreProjectiles.event.CustomProjectileHitEvent.HitType;
 
 /**
  * @author Benjamin
@@ -98,15 +97,22 @@ public class ProjectileExplosionEffect extends AbstractEffect {
 		}
 		if ((event instanceof CustomProjectileHitEvent)) {
 			CustomProjectileHitEvent e = ((CustomProjectileHitEvent)event);
-	        if (e.getHitType() == HitType.ENTITY){
-	        	e.getHitEntity().damage(3D, e.getProjectile().getShooter());
-	        }
+			LivingEntity entityToutched = e.getHitEntity();
+			//évite une boucle potentielle qui pourait créer des entités à l'infini.
+			if (entityToutched != null) {
+				if (entityToutched instanceof Player) {
+					if (((Player)entityToutched).getUniqueId().equals(getPlayerUUID())) {
+						return;
+					}
+				}
+				entityToutched.damage(3D, e.getProjectile().getShooter());
+			}
 	    }
 	}
 
 	private void doProjectileExplosion(Player player) {
 		Location origin = player.getEyeLocation();
-		Set<Location> destinations = getHollowSphereLocations(origin, 4);
+		List<Location> destinations = getHollowSphereLocations(origin, 4);
 		int i = 0;
 		for (Location destination : destinations) {
 			ProjectileFactory.createProjectile(getProjectileEffectParameter(), player, destination, i);
@@ -114,8 +120,8 @@ public class ProjectileExplosionEffect extends AbstractEffect {
 		}
 	}
 
-	private Set<Location> getHollowSphereLocations(Location origin, int radius) {
-		Set<Location> locations = new TreeSet<Location>();
+	private List<Location> getHollowSphereLocations(Location origin, int radius) {
+		List<Location> locations = new ArrayList<Location>();
 		 
 		radius += 0.5;
 		double radiusX, radiusY, radiusZ;
@@ -168,8 +174,16 @@ public class ProjectileExplosionEffect extends AbstractEffect {
                 }
             }
         }
-        for (int i = locations.size()-1;i>=0; i--) {
-        	Location location = (Location) locations.toArray()[i];
+        removingLoop:for (int i = locations.size()-1;i>=0; i--) {
+        	Location location = locations.get(i);
+        	//Supression des doublons
+        	for (int y = locations.size()-1;y>=0;y--) {
+        		Location location2 = locations.get(y);
+        			if (i != y && location.getBlockX() == location2.getBlockX() && location.getBlockY() == location2.getBlockY() && location.getBlockZ() == location2.getBlockZ()) {
+        				locations.remove(i);
+        				break removingLoop;
+        			}
+        	}
         	Material m = origin.getWorld().getBlockAt(location).getType();
         	//supressions des localisations correspondant à des blocs dans lesquels des entites ne peuvent pas se déplacer.
 			if (m != Material.AIR && m != Material.WATER && m != Material.LAVA && m != Material.STATIONARY_WATER && m != Material.STATIONARY_LAVA) {
@@ -198,7 +212,7 @@ public class ProjectileExplosionEffect extends AbstractEffect {
 	@Override
 	protected String getDescription() {
 		return "Sends projectiles around the player.\n" +
-				"The first parameter let us define the type of the projectileThe amplifier defines the number of block dropped when the player takes damages. The blocks are the blocks witch can be dropped.";
+				"The first parameter let us define the type of the projectileThe amplifier defines the number of block dropped when the player takes damages. The blocks are the blocks which can be dropped.";
 	}
 
 	private static final double lengthSq(double x, double y, double z) {

@@ -278,7 +278,7 @@ effects:
             item_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: WOOD
-              description: Item witch will be dropped.
+              description: Item which will be dropped.
               name: Item
               optionnal: true
               uniqueName: item_0
@@ -317,7 +317,7 @@ effects:
             item_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: WOOD
-              description: Item witch will be dropped.
+              description: Item which will be dropped.
               name: Item
               optionnal: true
               uniqueName: item_0
@@ -354,7 +354,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -411,7 +411,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: DIRT
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -468,7 +468,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -525,7 +525,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -582,7 +582,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -639,7 +639,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -696,7 +696,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -752,7 +752,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect witch will be applied to the player.
+                  description: defines the amplifier for the effect which will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -772,7 +772,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect witch will be applied to the player.
+                  description: defines the duration of the effect which will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -782,7 +782,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type witch will be applied to the player.
+                  description: defines the Effect Type which will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -799,7 +799,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect witch will be applied to the player.
+                  description: defines the amplifier for the effect which will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -819,7 +819,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect witch will be applied to the player.
+                  description: defines the duration of the effect which will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -829,7 +829,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type witch will be applied to the player.
+                  description: defines the Effect Type which will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -846,7 +846,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect witch will be applied to the player.
+                  description: defines the amplifier for the effect which will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -866,7 +866,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect witch will be applied to the player.
+                  description: defines the duration of the effect which will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -876,7 +876,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type witch will be applied to the player.
+                  description: defines the Effect Type which will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -893,7 +893,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect witch will be applied to the player.
+                  description: defines the amplifier for the effect which will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -913,7 +913,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect witch will be applied to the player.
+                  description: defines the duration of the effect which will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -923,7 +923,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type witch will be applied to the player.
+                  description: defines the Effect Type which will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -1032,7 +1032,7 @@ effects:
             block_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: GOLD_BLOCK
-              description: Block witch will appear under players's steps.
+              description: Block which will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: block_0

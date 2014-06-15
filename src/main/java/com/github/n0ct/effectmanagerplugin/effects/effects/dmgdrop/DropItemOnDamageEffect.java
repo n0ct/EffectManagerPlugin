@@ -99,7 +99,7 @@ public class DropItemOnDamageEffect extends AbstractEffect {
 	public EffectParameters getDefaultParameters() {
 		EffectParameters ret = new EffectParameters("effect Parameters","params","Drop Item On Damage Parameters", false, " ", 2);
 		EffectParameters paramBlocks = new EffectParameters("Items","item","Some items separated by ','.", false, ",", 0);
-		MaterialEffectParameter block1 = new MaterialEffectParameter("Item", "item" + EffectParameters.ITERATION_PARAMETER + "0", "Item witch will be dropped.", true, Material.WOOD);
+		MaterialEffectParameter block1 = new MaterialEffectParameter("Item", "item" + EffectParameters.ITERATION_PARAMETER + "0", "Item which will be dropped.", true, Material.WOOD);
 		paramBlocks.addSubEffectParameter(block1);
 		ret.addSubEffectParameter(paramBlocks);
 		IntegerEffectParameter amplifier = new IntegerEffectParameter("Amplifier","Amplifier","Number of items dropped each time the player takes damages.", true, 1, 1, 200);
@@ -109,7 +109,7 @@ public class DropItemOnDamageEffect extends AbstractEffect {
 
 	@Override
 	protected String getDescription() {
-		return "Randomly drops some items around the player when the player takes damages. The amplifier defines the number of block dropped when the player takes damages. The blocks are the blocks witch can be dropped.";
+		return "Randomly drops some items around the player when the player takes damages. The amplifier defines the number of block dropped when the player takes damages. The blocks are the blocks which can be dropped.";
 	}
 
 	@Override

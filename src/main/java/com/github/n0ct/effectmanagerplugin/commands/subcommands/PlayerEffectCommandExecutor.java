@@ -168,9 +168,15 @@ public class PlayerEffectCommandExecutor extends AbstractCommandExecutor impleme
 			playerUUID = getPlayerUUID(newArgs[0]);
 		} catch (IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
+			return true;
 		}
-		
-		List<AbstractEffect> effects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
+		List<AbstractEffect> effects=null;
+		try {
+			effects = plugin.getPlayerEffectManager().getEffectsForPlayer(playerUUID);
+		} catch (IllegalArgumentException e) {
+			MessageSender.sendErrorMessage(player, e.getMessage());
+			return true;
+		}
 		
 		if (effects.size() == 0) {
 			MessageSender.sendErrorMessage(player, "Player "+ newArgs[0] +" doesn't have any effect. Cannot delete the effect " + newArgs[1] + ".");
