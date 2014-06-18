@@ -26,6 +26,14 @@ public class EffectFactory {
 		return effect;
 	}
 	
+	public boolean isEffectClassTakingParameters(String effectClassName) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		AbstractEffect effect = getEffectInstance(effectClassName,"test");
+		if (effect.getDefaultParameters().getMaxNumberOfSubParams() == 0) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	private AbstractEffect getEffectInstance(String effectClassName,String effectName) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		if (!this.effectManager.effectClassExists(effectClassName)) {

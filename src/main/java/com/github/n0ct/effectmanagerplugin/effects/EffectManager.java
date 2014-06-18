@@ -164,4 +164,14 @@ public class EffectManager implements ConfigurationSerializable {
 			this.remove(playersArray[i]);
 		}
 	}
+
+	public boolean isEffectClassTakingParameters(String effectClassName) {
+		try {
+			return effectFactory.isEffectClassTakingParameters(effectClassName);
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			throw new IllegalArgumentException("An error occured during the effect's default parameters retrieving",e); 
+		}
+	}
 }

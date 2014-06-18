@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.inventory.ItemStack;
 
 import com.github.n0ct.effectmanagerplugin.effects.effects.SavedBlock;
 import com.github.n0ct.effectmanagerplugin.effects.generic.AbstractEffect;
@@ -24,7 +24,7 @@ import com.github.n0ct.effectmanagerplugin.effects.parameters.FloatEffectParamet
 import com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter;
 import com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters;
 
-public class ShockWaveLendingEffect extends AbstractEffect {
+public class ShockwaveLendingEffect extends AbstractEffect {
 
 
 	private static final String EFFECT_TYPE_NAME = "lendingEffect";
@@ -33,20 +33,24 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 
 	private static final int MAX_HEIGHT_DIF = 3;
 	
-	public static ShockWaveLendingEffect valueOf(Map<String,Object> map) {
-		return new ShockWaveLendingEffect(map);
+	private int[] shockwaveForm;
+	
+	public static ShockwaveLendingEffect valueOf(Map<String,Object> map) {
+		return new ShockwaveLendingEffect(map);
 	}
 	
-	public static ShockWaveLendingEffect deserialize(Map<String,Object> map) {
-		return new ShockWaveLendingEffect(map);
+	public static ShockwaveLendingEffect deserialize(Map<String,Object> map) {
+		return new ShockwaveLendingEffect(map);
 	}
 	
-	public ShockWaveLendingEffect(Map<String,Object> map) {
+	public ShockwaveLendingEffect(Map<String,Object> map) {
 		super(map);
+		shockwaveForm = new int[] {0,-1,-1,0,1,2,1,0};
 	}
 	
-	public ShockWaveLendingEffect(String name) {
+	public ShockwaveLendingEffect(String name) {
 		super(name);
+		shockwaveForm = new int[] {0,-1,-1,0,1,2,1,0};
 	}
 
 	@Override
@@ -103,7 +107,7 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 		Location origin = p.getLocation();
 		World w = p.getWorld();
 		//creation de la map qui contiendra pour chaque valeur d'un rayon R un Set de Location avec les blocks d'un cercle de rayon R autour du joueur.
-		Map<Integer,List<Location>> map = findShockwavesLocation(radius, origin, w);
+		Map<Integer,List<SavedBlock>> map = findShockwavesLocation(radius, origin, w);
 		//Do the shockWaves
 		doShockwave(w,map);
 	}
@@ -113,10 +117,10 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 	 * @param origin
 	 * @param w
 	 */
-	private Map<Integer,List<Location>> findShockwavesLocation(int radius, Location origin, World w) {
-		Map<Integer,List<Location>> map = new TreeMap<Integer,List<Location>>();
-		List<Location> originSet = new ArrayList<Location>();
-		originSet.add(origin);
+	private Map<Integer,List<SavedBlock>> findShockwavesLocation(int radius, Location origin, World w) {
+		Map<Integer,List<SavedBlock>> map = new TreeMap<Integer,List<SavedBlock>>();
+		List<SavedBlock> originSet = new ArrayList<SavedBlock>();
+		originSet.add(new SavedBlock(w.getBlockAt(origin)));
 		map.put(0,originSet);
 		for (int r=1;r<=radius;r++) {
 			map.put(r, getCircle(origin, radius));
@@ -124,23 +128,23 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 		// Modifies the map elements to be sure each saved block is at the ground level.
 		// So we increase or decrease the Y component of the location until we find the ground level.
 		for (Integer r:map.keySet()) {
-			List<Location> circleLocations = map.get(r);
+			List<SavedBlock> circleLocations = map.get(r);
 			for (int i = circleLocations.size()-1;i>=0;i--) {
-				Location location = circleLocations.get(i);
+				SavedBlock location = circleLocations.get(i);
 				//foreach locations
-				Location upperLocation = new Location(w,location.getBlockX(),location.getBlockY()+1,location.getBlockZ());
-				Material locationMaterial = w.getBlockAt(location).getType();
+				Location upperLocation = new Location(w,location.getLocation().getBlockX(),location.getLocation().getBlockY()+1,location.getLocation().getBlockZ());
+				Material locationMaterial = w.getBlockAt(location.getLocation()).getType();
 				Material upperLocationMaterial = w.getBlockAt(upperLocation).getType();
 				Location groundLocation = null;
 				if (locationMaterial.equals(Material.AIR)) { //We must decrease Height to find the ground
-					groundLocation = findGround(w,location,false);
+					groundLocation = findGround(w,location.getLocation(),false);
 				} else if (!upperLocationMaterial.equals(Material.AIR)) { // We must increase Height to find the ground
-					groundLocation = findGround(w,location,true);
+					groundLocation = findGround(w,location.getLocation(),true);
 				} else { //We already have the ground;
 					continue;
 				}
 				if (groundLocation != null) {
-					circleLocations.add(groundLocation);
+					circleLocations.add(new SavedBlock(w.getBlockAt(groundLocation)));
 				}
 				circleLocations.remove(i);
 			}
@@ -190,18 +194,18 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 	 * @author ArthurMaker
 	 * @credits CaptainBern, skore87, Google!
 	 */
-	public static List<Location> getCircle(Location centerLoc, int radius){
-	    List<Location> circle = new ArrayList<Location>();
+	public static List<SavedBlock> getCircle(Location centerLoc, int radius){
+	    List<SavedBlock> circle = new ArrayList<SavedBlock>();
 	    World world = centerLoc.getWorld();
 	    int x = 0;
 	    int z = radius;
 	    int error = 0;
 	    int d = 2 - 2 * radius;
 	    while (z >= 0) {
-	      circle.add(new Location(world, centerLoc.getBlockX() + x, centerLoc.getY(), centerLoc.getBlockZ() + z));
-	      circle.add(new Location(world, centerLoc.getBlockX() - x, centerLoc.getY(), centerLoc.getBlockZ() + z));
-	      circle.add(new Location(world, centerLoc.getBlockX() - x, centerLoc.getY(), centerLoc.getBlockZ() - z));
-	      circle.add(new Location(world, centerLoc.getBlockX() + x, centerLoc.getY(), centerLoc.getBlockZ() - z));
+	      circle.add(new SavedBlock(world.getBlockAt(new Location(world, centerLoc.getBlockX() + x, centerLoc.getY(), centerLoc.getBlockZ() + z))));
+	      circle.add(new SavedBlock(world.getBlockAt(new Location(world, centerLoc.getBlockX() - x, centerLoc.getY(), centerLoc.getBlockZ() + z))));
+	      circle.add(new SavedBlock(world.getBlockAt(new Location(world, centerLoc.getBlockX() - x, centerLoc.getY(), centerLoc.getBlockZ() - z))));
+	      circle.add(new SavedBlock(world.getBlockAt(new Location(world, centerLoc.getBlockX() + x, centerLoc.getY(), centerLoc.getBlockZ() - z))));
 	      error = 2 * (d + z) - 1;
 	      if ((d < 0) && (error <= 0)) {
 	        x++;
@@ -223,52 +227,77 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 	    return circle;
 	}
 
-	private void doShockwave(World w, Map<Integer, List<Location>> map) {
+	private void doShockwave(World w, Map<Integer, List<SavedBlock>> map) {
 		/*int power = getShockwavePower();
 		int speed = getShockwaveSpeed();*/
 		//We do the ground effect
 		for (int i = 0; i<map.size(); i++) {
-			List<Location> circleLocations = map.get(i);
-			for (Location location : circleLocations) {
-				for (int depth = 0;depth<map.size()-i;i++) {
-					final Block b = w.getBlockAt(new Location(w,location.getBlockX(),location.getBlockY()-depth,location.getBlockZ()));
-					final SavedBlock savedB = new SavedBlock(b);
-					//Schedule the reinit of the block in its original state
-					runTaskLater(new Runnable() {
-						@Override
-						public void run() {
-							savedB.reinitBlock();
+			List<SavedBlock> circleLocations = map.get(i);
+			for (int t = 0; t<map.size()+shockwaveForm.length;t++) {
+				final Integer groundHeightModification = shockwaveHeight(i, t);
+				for (SavedBlock block : circleLocations) {
+					if (t == 0) {
+						//Schedule the reinit of the block in its original state
+						for (int height = getMinHeight();height<=getMaxHeight();height++) {
+							final Block b = w.getBlockAt(new Location(w,block.getLocation().getBlockX(),block.getLocation().getBlockY()+height,block.getLocation().getBlockZ()));
+							final SavedBlock savedB = new SavedBlock(b);
+							runTaskLater(new Runnable() {
+								@Override
+								public void run() {
+									savedB.reinitBlock();
+								}
+							}, (map.size()*4*i));
 						}
-					}, depth+(map.size()*4*i));
+					}
+					final SavedBlock oldBlock = block;
 					//Destroy the block.
 					runTaskLater(new Runnable() {
+						@SuppressWarnings("deprecation")
 						@Override
 						public void run() {
-							b.breakNaturally(new ItemStack(b.getType(), 0));
+							if (groundHeightModification != null) {
+								final Block newBlock = oldBlock.getLocation().getWorld().getBlockAt(oldBlock.getLocation().getBlockX(),oldBlock.getLocation().getBlockY()+groundHeightModification,oldBlock.getLocation().getBlockZ());
+								newBlock.setTypeIdAndData(oldBlock.getType().getId(), oldBlock.getData(), false);
+							}
 						}
-					}, depth+(map.size()*i));
+					}, i+(map.size()*t));
 				}
 			}
+
 		}
 	}
 	
 	
+	private int getMaxHeight() {
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i<shockwaveForm.length; i++) {
+				if (shockwaveForm[i]>max) {
+					max = shockwaveForm[i];
+				}
+		}
+		return max;
+	}
+
+	private int getMinHeight() {
+		int min = Integer.MIN_VALUE;
+		for (int i = 0; i<shockwaveForm.length; i++) {
+			if (shockwaveForm[i]<min) {
+				min = shockwaveForm[i];
+			}
+		}
+		return min;
+	}
+
 	@Override
 	protected String getHelp() {
-		//TODO
-		return "Bump the entity which attack a player or the player himself if called dirrectly.";
+		return "Do a shockwave on the ground when the player takes damages by falling.";
 	}
 
 	@Override
 	protected String getDescription() {
-		//TODO
-		return "Throw the entity attacking the player or the player himself if called dirrectly.\n"
-				+ "The first parameter ('Bumps') can contains many 'Bump' parameters to let you do many bump one after the other.\n"
-				+"Each Bump paramater must be separated by ';' and can contain 4 parameters (these 4 parameters must be separated by ','):\n"
-				+"'velocityX','velocityY','velocityZ' defines the velocity Vector that is used to throw the Entity.\n"
-				+"'delay' defines the delay afterwhile the Entity throw will be done.\n"
-				+"The second parameter 'survival' is used if the Entity thrown in the air is a player:\n" 
-				+"If the parameter value is 'true' it sets the gamemode of that player to survival then, after a delay defined in the third parameter 'timeBeforeCreative', sets it back to creative."; 
+		return "Do a shockwave on the ground when the player takes damages by falling.\n"
+				+ "The first parameter ('minFallDistance') contains the minimum fall distance from which the effect is triggered. But remember that the effect will only be triggered if the player takes damages.\n"
+				+ "The second parameter 'radius' defines the radius of the shockwave.\n"; 
 	}
 
 	/*private int getShockwaveSpeed() {
@@ -277,12 +306,11 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 	}*/
 
 	private int getShockwavesRadius() {
-		// TODO Auto-generated method stub
-		return 5;
+		return ((IntegerEffectParameter)getParameters().getSubParameters().get(1)).getValue();
 	}
 
 	private float getMinFallDistance() {
-		return 3;
+		return ((FloatEffectParameter)getParameters().getSubParameters().get(0)).getValue();
 	}
 	
 	/*private int getShockwavePower() {
@@ -292,14 +320,26 @@ public class ShockWaveLendingEffect extends AbstractEffect {
 	
 	@Override
 	public EffectParameters getDefaultParameters() {
-		EffectParameters ret = new EffectParameters("Shockwave effect Parameters","params","Shockwave Lending Effect Parameters.", true, " ", 0);
-		FloatEffectParameter paramMinFallDistance = new FloatEffectParameter("minFallDistance","minFallDistance","defines the minimum fall distance triggering the effect.",true,new Float(5), new Float(1), new Float(256));
-		ret.addSubEffectParameter(paramMinFallDistance);
-		IntegerEffectParameter paramRaduis = new IntegerEffectParameter("radius","radius","The radius of the effect",true,5,2,10);
-		ret.addSubEffectParameter(paramRaduis);
-		return ret;
+		//TODO remove that stub.
+		throw new NotImplementedException("The effect ShockwaveLending is not available yet.");
+		
+//		EffectParameters ret = new EffectParameters("Shockwave effect Parameters","params","Shockwave Lending Effect Parameters.", true, " ", 0);
+//		FloatEffectParameter paramMinFallDistance = new FloatEffectParameter("minFallDistance","minFallDistance","defines the minimum fall distance triggering the effect.",true,new Float(5), new Float(1), new Float(256));
+//		ret.addSubEffectParameter(paramMinFallDistance);
+//		IntegerEffectParameter paramRaduis = new IntegerEffectParameter("radius","radius","The radius of the effect",true,5,2,10);
+//		ret.addSubEffectParameter(paramRaduis);
+//		return ret;
 	}
 	
+	private Integer shockwaveHeight(int radius,int t) {
+		
+		int initPosition = 2;
+		if (radius+initPosition-t > 0 && radius+initPosition-t < shockwaveForm.length) {
+			return shockwaveForm[radius+initPosition-t];
+		} else {
+			return null;
+		}
+	}
 
 
 }

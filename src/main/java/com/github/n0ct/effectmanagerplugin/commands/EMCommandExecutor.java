@@ -154,10 +154,13 @@ public class EMCommandExecutor implements CommandExecutor {
 	}
 
 	public boolean isPlayerAllowed(Player player) {
-		if(!player.isOp()) {
-			return false;
+		if(player.isOp()) {
+			return true;
 		}
-		return true;
+		if(player.hasPermission("effectmanagerplugin")) {
+			return true;
+		}
+		return false;
 	}
 
 	public void showHelp(Player player, String[] newArgs) {

@@ -32,8 +32,6 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 
 	private Map<UUID,List<AbstractEffect>> playersEffects;
 
-	private EffectManager effectManager;
-
 	private EffectManagerPlugin plugin;
 	
 	private static PlayerEffectManager instance;
@@ -55,7 +53,6 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	private PlayerEffectManager() {
 		this.plugin = EffectManagerPlugin.getPlugin(EffectManagerPlugin.class);
 		this.playersEffects = new TreeMap<UUID,List<AbstractEffect>>();
-		this.effectManager = plugin.getEffectManager();
 	}
 
 	@Override
@@ -84,7 +81,11 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		for (String playerUUIDStr : map.keySet()) {
 			String[] playerEffects = ((String)map.get(playerUUIDStr)).split(";");
 			for (int i = 0;i< playerEffects.length;i++) {
-				this.add(UUID.fromString(playerUUIDStr), playerEffects[i],false);
+				try {
+					this.add(UUID.fromString(playerUUIDStr), playerEffects[i],false);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		}
 	}
@@ -116,7 +117,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 		OfflinePlayer player = getPlayer(playerUUID, true);
 		checkEffect(effectName);
 		//verifie que ce type d'effet n'est pas deja attribue au joueur.
-		AbstractEffect effect = (AbstractEffect) this.effectManager.get(effectName);
+		AbstractEffect effect = (AbstractEffect) plugin.getEffectManager().get(effectName);
 		checkEffectTypeDuplication(player.getPlayer(),effect,false);
 		//recupere et si necessaire cree le(s) eventListener(s) appropries
 		try {
@@ -261,7 +262,7 @@ public class PlayerEffectManager implements ConfigurationSerializable {
 	}
 	
 	private void checkEffect(String effectName) {
-		if(!effectManager.contains(effectName))	{
+		if(!plugin.getEffectManager().contains(effectName))	{
 			throw new IllegalArgumentException("effect " + effectName + " doesn't exist");
 		}
 	}

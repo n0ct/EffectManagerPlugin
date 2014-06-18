@@ -171,13 +171,10 @@ public class EffectCommandExecutor extends AbstractCommandExecutor implements Co
 	}
 
 	private boolean effectAdd(Player player, String[] newArgs) {
-		if (newArgs.length < 3) {
-			MessageSender.sendErrorMessage(player, "Incorrect call of add effect method: You must at least specify a name, the effectClassName and then parameters.");
-			MessageSender.sendInformationMessage(player, "Usage: /emeffect add <effectName> <effectClass> <parameter> [<moreParameters> ...]");
+		if (newArgs.length < 2) {
+			MessageSender.sendErrorMessage(player, "Incorrect call of add effect method: You must at least specify a name, the effectClassName and then you may add parameters.");
+			MessageSender.sendInformationMessage(player, "Usage: /emeffect add <effectName> <effectClass> [<parameter> [<moreParameters> ...]]");
 			showEffectClasses(player);
-			if (newArgs.length >=2) {
-				showEffectClassParameters(player, newArgs[1]);
-			}
 			return true;
 		}
 		if (newArgs[0].length() < 3) {
@@ -194,11 +191,16 @@ public class EffectCommandExecutor extends AbstractCommandExecutor implements Co
 			this.showEffectClasses(player);
 			return true;
 		}
+		if (plugin.getEffectManager().isEffectClassTakingParameters(newArgs[1]) && newArgs.length<3) {
+			this.showEffectClassParameters(player, newArgs[1]);
+			return true;
+		}
 		AbstractEffect effect = null;
 		try {
 			effect = plugin.getEffectManager().createEffect(newArgs[0], newArgs[1], StringUtils.join(ArrayUtils.subarray(newArgs, 2, newArgs.length)," "));
 		} catch(IllegalArgumentException e) {
 			MessageSender.sendErrorMessage(player, e.getMessage());
+			this.showEffectClassParameters(player, newArgs[1]);
 			return true;
 		}
 		MessageSender.sendSuccessMessage(player,"The effect " +  effect.getName() + " has been created with the following parameters:");

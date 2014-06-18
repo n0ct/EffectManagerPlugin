@@ -136,6 +136,9 @@ public class EffectParameters extends AbstractEffectParameter implements Cloneab
 
 	@Override
 	public void setValueFromString(String str) {
+		if (getMaxNumberOfSubParams() == 0) {
+			return;
+		}
 		if (subParameters.size() == 0) {
 			throw new IllegalArgumentException("[INTERNAL ERROR] Effect definition is invalid: an EffectParameters object doesn't contain any subParameters");
 		}

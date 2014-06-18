@@ -1,4 +1,118 @@
 effects:
+  GrowCarrot:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: GrowCarrot
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: CARROT
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: SOIL
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '3'
+      splitSeparator: ' '
+      uniqueName: params
+  GrowPumpkin:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
+    name: GrowPumpkin
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Path Block Effect Parameters
+      maxNumberOfSubParams: 3
+      name: effect Parameters
+      optionnal: false
+      parameters:
+        blocks:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: Some blocks separated by ','.
+          maxNumberOfSubParams: 2
+          name: Blocks
+          optionnal: false
+          parameters:
+            growingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: CROPS
+              description: Block where plants will grow.
+              name: Block
+              optionnal: true
+              uniqueName: growingblock
+              value: PUMPKIN_STEM
+            supportingblock:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
+              defaultValue: SOIL
+              description: Block witch will appear under players's steps.
+              name: Block
+              optionnal: true
+              uniqueName: supportingblock
+              value: SOIL
+          splitSeparator: ','
+          uniqueName: blocks
+        delay:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '17'
+          description: Delay before the blocks will be reinitialized to their original state.
+          maxValue: '30'
+          minValue: '1'
+          name: Delay
+          optionnal: true
+          uniqueName: delay
+          value: '10'
+        radius:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+          defaultValue: '1'
+          description: Radius of block modification.
+          maxValue: '4'
+          minValue: '1'
+          name: Radius
+          optionnal: true
+          uniqueName: radius
+          value: '3'
+      splitSeparator: ' '
+      uniqueName: params
   batmanTemp:
     className: com.github.n0ct.effectmanagerplugin.effects.effects.path.entity.TemporaryPathEntityEffect
     name: batmanTemp
@@ -278,7 +392,7 @@ effects:
             item_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: WOOD
-              description: Item which will be dropped.
+              description: Item witch will be dropped.
               name: Item
               optionnal: true
               uniqueName: item_0
@@ -317,70 +431,13 @@ effects:
             item_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: WOOD
-              description: Item which will be dropped.
+              description: Item witch will be dropped.
               name: Item
               optionnal: true
               uniqueName: item_0
               value: SPONGE
           splitSeparator: ','
           uniqueName: item
-      splitSeparator: ' '
-      uniqueName: params
-  growCarrot:
-    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
-    name: growCarrot
-    parameters:
-      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
-      description: Path Block Effect Parameters
-      maxNumberOfSubParams: 3
-      name: effect Parameters
-      optionnal: false
-      parameters:
-        blocks:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
-          description: Some blocks separated by ','.
-          maxNumberOfSubParams: 2
-          name: Blocks
-          optionnal: false
-          parameters:
-            growingblock:
-              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
-              defaultValue: CROPS
-              description: Block where plants will grow.
-              name: Block
-              optionnal: true
-              uniqueName: growingblock
-              value: CROPS
-            supportingblock:
-              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
-              defaultValue: SOIL
-              description: Block which will appear under players's steps.
-              name: Block
-              optionnal: true
-              uniqueName: supportingblock
-              value: CARROT
-          splitSeparator: ','
-          uniqueName: blocks
-        delay:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
-          defaultValue: '17'
-          description: Delay before the blocks will be reinitialized to their original state.
-          maxValue: '30'
-          minValue: '1'
-          name: Delay
-          optionnal: true
-          uniqueName: delay
-          value: '10'
-        radius:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
-          defaultValue: '1'
-          description: Radius of block modification.
-          maxValue: '4'
-          minValue: '1'
-          name: Radius
-          optionnal: true
-          uniqueName: radius
-          value: '2'
       splitSeparator: ' '
       uniqueName: params
   growCrops:
@@ -411,7 +468,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: DIRT
-              description: Block which will appear under players's steps.
+              description: Block witch will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -464,7 +521,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: growingblock
-              value: CROPS
+              value: MELON_STEM
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
@@ -472,7 +529,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: supportingblock
-              value: MELON_STEM
+              value: SOIL
           splitSeparator: ','
           uniqueName: blocks
         delay:
@@ -494,7 +551,7 @@ effects:
           name: Radius
           optionnal: true
           uniqueName: radius
-          value: '2'
+          value: '3'
       splitSeparator: ' '
       uniqueName: params
   growNetherWart:
@@ -525,7 +582,7 @@ effects:
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
-              description: Block which will appear under players's steps.
+              description: Block witch will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: supportingblock
@@ -578,64 +635,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: growingblock
-              value: CROPS
-            supportingblock:
-              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
-              defaultValue: SOIL
-              description: Block which will appear under players's steps.
-              name: Block
-              optionnal: true
-              uniqueName: supportingblock
               value: POTATO
-          splitSeparator: ','
-          uniqueName: blocks
-        delay:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
-          defaultValue: '17'
-          description: Delay before the blocks will be reinitialized to their original state.
-          maxValue: '30'
-          minValue: '1'
-          name: Delay
-          optionnal: true
-          uniqueName: delay
-          value: '10'
-        radius:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
-          defaultValue: '1'
-          description: Radius of block modification.
-          maxValue: '4'
-          minValue: '1'
-          name: Radius
-          optionnal: true
-          uniqueName: radius
-          value: '2'
-      splitSeparator: ' '
-      uniqueName: params
-  growPumpkin:
-    className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.GrowPathBlockEffect
-    name: growPumpkin
-    parameters:
-      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
-      description: Path Block Effect Parameters
-      maxNumberOfSubParams: 3
-      name: effect Parameters
-      optionnal: false
-      parameters:
-        blocks:
-          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
-          description: Some blocks separated by ','.
-          maxNumberOfSubParams: 2
-          name: Blocks
-          optionnal: false
-          parameters:
-            growingblock:
-              className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
-              defaultValue: CROPS
-              description: Block where plants will grow.
-              name: Block
-              optionnal: true
-              uniqueName: growingblock
-              value: CROPS
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
@@ -643,7 +643,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: supportingblock
-              value: PUMPKIN_STEM
+              value: SOIL
           splitSeparator: ','
           uniqueName: blocks
         delay:
@@ -665,7 +665,7 @@ effects:
           name: Radius
           optionnal: true
           uniqueName: radius
-          value: '2'
+          value: '3'
       splitSeparator: ' '
       uniqueName: params
   growSugarCanes:
@@ -692,7 +692,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: growingblock
-              value: SAND
+              value: SUGAR_CANE_BLOCK
             supportingblock:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: SOIL
@@ -700,7 +700,7 @@ effects:
               name: Block
               optionnal: true
               uniqueName: supportingblock
-              value: SUGAR_CANE_BLOCK
+              value: SAND
           splitSeparator: ','
           uniqueName: blocks
         delay:
@@ -722,7 +722,39 @@ effects:
           name: Radius
           optionnal: true
           uniqueName: radius
-          value: '2'
+          value: '3'
+      splitSeparator: ' '
+      uniqueName: params
+  lowDoubleJump:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.jump.DoubleJumpEffect
+    name: lowDoubleJump
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Double Jump Effect Parameters.
+      maxNumberOfSubParams: 0
+      name: Double Jump Effect Parameters
+      optionnal: true
+      parameters:
+        jumpHeight:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+          defaultValue: '1.0'
+          description: Defines the height of the double jump.
+          maxValue: '3.0'
+          minValue: '0.5'
+          name: jumpHeight
+          optionnal: true
+          uniqueName: jumpHeight
+          value: '0.7'
+        velocityMultiplier:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.DoubleEffectParameter
+          defaultValue: '1.5'
+          description: Defines the multiplier that increase the horizontal velocity of the player upon double jumping.
+          maxValue: '3.0'
+          minValue: '1.0'
+          name: velocityMultiplier
+          optionnal: true
+          uniqueName: velocityMultiplier
+          value: '1.2'
       splitSeparator: ' '
       uniqueName: params
   multiBlindAttacker:
@@ -752,7 +784,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect which will be applied to the player.
+                  description: defines the amplifier for the effect witch will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -772,7 +804,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect which will be applied to the player.
+                  description: defines the duration of the effect witch will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -782,7 +814,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type which will be applied to the player.
+                  description: defines the Effect Type witch will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -799,7 +831,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect which will be applied to the player.
+                  description: defines the amplifier for the effect witch will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -819,7 +851,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect which will be applied to the player.
+                  description: defines the duration of the effect witch will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -829,7 +861,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type which will be applied to the player.
+                  description: defines the Effect Type witch will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -846,7 +878,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect which will be applied to the player.
+                  description: defines the amplifier for the effect witch will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -866,7 +898,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect which will be applied to the player.
+                  description: defines the duration of the effect witch will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -876,7 +908,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type which will be applied to the player.
+                  description: defines the Effect Type witch will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -893,7 +925,7 @@ effects:
                 amplifier:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '1'
-                  description: defines the amplifier for the effect which will be applied to the player.
+                  description: defines the amplifier for the effect witch will be applied to the player.
                   maxValue: '100'
                   minValue: '1'
                   name: Effect amplifier
@@ -913,7 +945,7 @@ effects:
                 duration:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
                   defaultValue: '10'
-                  description: defines the duration of the effect which will be applied to the player.
+                  description: defines the duration of the effect witch will be applied to the player.
                   maxValue: '2000'
                   minValue: '1'
                   name: Effect duration
@@ -923,7 +955,7 @@ effects:
                 effect:
                   className: com.github.n0ct.effectmanagerplugin.effects.parameters.PotionEffectTypeEffectParameter
                   defaultValue: CONFUSION
-                  description: defines the Effect Type which will be applied to the player.
+                  description: defines the Effect Type witch will be applied to the player.
                   name: Effect type
                   optionnal: true
                   uniqueName: effect
@@ -1012,6 +1044,210 @@ effects:
           value: item,0.3,portal
       splitSeparator: ' '
       uniqueName: Projectile explosion effect Parameters
+  simpleNameChameleon:
+    className: com.github.n0ct.effectmanagerplugin.effects.effects.namechameleon.NameChameleonEffect
+    name: simpleNameChameleon
+    parameters:
+      className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+      description: Name Chameleon Effect Parameters.
+      maxNumberOfSubParams: 2
+      name: Name Chameleon Effect Parameters
+      optionnal: true
+      parameters:
+        activated:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.BooleanEffectParameter
+          defaultValue: 'true'
+          description: Defines if the effect is activated at start or not
+          name: Activated
+          optionnal: true
+          uniqueName: activated
+          value: 'false'
+        nameChanges:
+          className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+          description: The list of the nameChanges which will be applied to the player separated by ';' .
+          maxNumberOfSubParams: 0
+          name: nameChanges
+          optionnal: true
+          parameters:
+            nameChange_0:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: A definition of a change of name. each parameters is separated by ','.
+              maxNumberOfSubParams: 3
+              name: nameChange
+              optionnal: true
+              parameters:
+                color:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.ChatColorEffectParameter
+                  defaultValue: RED
+                  description: The color which will be applied on the player's name.
+                  name: Color
+                  optionnal: false
+                  uniqueName: color
+                  value: RED
+                interval:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '15'
+                  description: Interval between this name change and the next.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Interval
+                  optionnal: false
+                  uniqueName: interval
+                  value: '100'
+                name:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.StringEffectParameter
+                  defaultValue: ''
+                  description: The optionnal parameter used to define a change of the player's name
+                  name: Name
+                  optionnal: true
+                  uniqueName: name
+                  value: ''
+              splitSeparator: ','
+              uniqueName: nameChange_0
+            nameChange_1:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: A definition of a change of name. each parameters is separated by ','.
+              maxNumberOfSubParams: 3
+              name: nameChange
+              optionnal: true
+              parameters:
+                color:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.ChatColorEffectParameter
+                  defaultValue: RED
+                  description: The color which will be applied on the player's name.
+                  name: Color
+                  optionnal: false
+                  uniqueName: color
+                  value: BLUE
+                interval:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '15'
+                  description: Interval between this name change and the next.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Interval
+                  optionnal: false
+                  uniqueName: interval
+                  value: '100'
+                name:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.StringEffectParameter
+                  defaultValue: ''
+                  description: The optionnal parameter used to define a change of the player's name
+                  name: Name
+                  optionnal: true
+                  uniqueName: name
+                  value: ''
+              splitSeparator: ','
+              uniqueName: nameChange_1
+            nameChange_2:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: A definition of a change of name. each parameters is separated by ','.
+              maxNumberOfSubParams: 3
+              name: nameChange
+              optionnal: true
+              parameters:
+                color:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.ChatColorEffectParameter
+                  defaultValue: RED
+                  description: The color which will be applied on the player's name.
+                  name: Color
+                  optionnal: false
+                  uniqueName: color
+                  value: YELLOW
+                interval:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '15'
+                  description: Interval between this name change and the next.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Interval
+                  optionnal: false
+                  uniqueName: interval
+                  value: '100'
+                name:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.StringEffectParameter
+                  defaultValue: ''
+                  description: The optionnal parameter used to define a change of the player's name
+                  name: Name
+                  optionnal: true
+                  uniqueName: name
+                  value: ''
+              splitSeparator: ','
+              uniqueName: nameChange_2
+            nameChange_3:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: A definition of a change of name. each parameters is separated by ','.
+              maxNumberOfSubParams: 3
+              name: nameChange
+              optionnal: true
+              parameters:
+                color:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.ChatColorEffectParameter
+                  defaultValue: RED
+                  description: The color which will be applied on the player's name.
+                  name: Color
+                  optionnal: false
+                  uniqueName: color
+                  value: BLACK
+                interval:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '15'
+                  description: Interval between this name change and the next.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Interval
+                  optionnal: false
+                  uniqueName: interval
+                  value: '100'
+                name:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.StringEffectParameter
+                  defaultValue: ''
+                  description: The optionnal parameter used to define a change of the player's name
+                  name: Name
+                  optionnal: true
+                  uniqueName: name
+                  value: ''
+              splitSeparator: ','
+              uniqueName: nameChange_3
+            nameChange_4:
+              className: com.github.n0ct.effectmanagerplugin.effects.parameters.generic.EffectParameters
+              description: A definition of a change of name. each parameters is separated by ','.
+              maxNumberOfSubParams: 3
+              name: nameChange
+              optionnal: true
+              parameters:
+                color:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.ChatColorEffectParameter
+                  defaultValue: RED
+                  description: The color which will be applied on the player's name.
+                  name: Color
+                  optionnal: false
+                  uniqueName: color
+                  value: GREEN
+                interval:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.IntegerEffectParameter
+                  defaultValue: '15'
+                  description: Interval between this name change and the next.
+                  maxValue: '2000'
+                  minValue: '1'
+                  name: Interval
+                  optionnal: false
+                  uniqueName: interval
+                  value: '100'
+                name:
+                  className: com.github.n0ct.effectmanagerplugin.effects.parameters.StringEffectParameter
+                  defaultValue: ''
+                  description: The optionnal parameter used to define a change of the player's name
+                  name: Name
+                  optionnal: true
+                  uniqueName: name
+                  value: ''
+              splitSeparator: ','
+              uniqueName: nameChange_4
+          splitSeparator: ;
+          uniqueName: nameChanges
+      splitSeparator: '-----------'
+      uniqueName: params
   spongePath:
     className: com.github.n0ct.effectmanagerplugin.effects.effects.path.block.PathBlockEffect
     name: spongePath
@@ -1032,7 +1268,7 @@ effects:
             block_0:
               className: com.github.n0ct.effectmanagerplugin.effects.parameters.MaterialEffectParameter
               defaultValue: GOLD_BLOCK
-              description: Block which will appear under players's steps.
+              description: Block witch will appear under players's steps.
               name: Block
               optionnal: true
               uniqueName: block_0
