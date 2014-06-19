@@ -24,6 +24,8 @@ public class ListEffectCommandExecutor extends AbstractCommandExecutor implement
 	
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
 
+	public static final String SHORT_COMMAND = "l";
+
 	public ListEffectCommandExecutor(EffectManagerPlugin plugin) {
 		super(plugin);
 	}

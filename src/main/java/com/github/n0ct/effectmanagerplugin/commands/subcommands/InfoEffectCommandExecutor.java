@@ -22,6 +22,8 @@ public class InfoEffectCommandExecutor extends AbstractCommandExecutor implement
 	public static final String COMMAND = "info";
 
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
+
+	public static final String SHORT_COMMAND = "i";
 	
 	public InfoEffectCommandExecutor(EffectManagerPlugin plugin) {
 		super(plugin);

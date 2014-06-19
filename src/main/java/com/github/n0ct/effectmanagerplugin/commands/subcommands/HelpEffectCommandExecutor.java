@@ -16,6 +16,8 @@ public class HelpEffectCommandExecutor extends AbstractCommandExecutor implement
 	public static final String COMMAND = "help";
 
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
+
+	public static final String SHORT_COMMAND = "h";
 	
 	public HelpEffectCommandExecutor(EffectManagerPlugin plugin) {
 		super(plugin);

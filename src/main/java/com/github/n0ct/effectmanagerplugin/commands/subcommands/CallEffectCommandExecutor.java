@@ -20,6 +20,8 @@ public class CallEffectCommandExecutor extends AbstractCommandExecutor implement
 	public static final String COMMAND = "call";
 
 	public static final String FULL_COMMAND = "/" + EMCommandExecutor.COMMAND + COMMAND + " ";
+
+	public static final String SHORT_COMMAND = "c";
 	
 	public CallEffectCommandExecutor(EffectManagerPlugin plugin) {
 		super(plugin);

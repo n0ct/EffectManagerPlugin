@@ -63,13 +63,17 @@ public class EMCommandExecutor implements CommandExecutor {
 		
 		plugin.getCommand(COMMAND).setExecutor(this);
 		plugin.getCommand(COMMAND + InfoEffectCommandExecutor.COMMAND).setExecutor(this.infoEffectCommandExecutor);
+		plugin.getCommand(COMMAND + InfoEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.infoEffectCommandExecutor);
 		plugin.getCommand(COMMAND + PlayerEffectCommandExecutor.COMMAND).setExecutor(this.playerEffectCommandExecutor);
 		plugin.getCommand(COMMAND + PlayerEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.playerEffectCommandExecutor);
 		plugin.getCommand(COMMAND + EffectCommandExecutor.COMMAND).setExecutor(this.effectCommandExecutor);
 		plugin.getCommand(COMMAND + EffectCommandExecutor.SHORT_COMMAND).setExecutor(this.effectCommandExecutor);
 		plugin.getCommand(COMMAND + CallEffectCommandExecutor.COMMAND).setExecutor(this.callEffectCommandExecutor);
+		plugin.getCommand(COMMAND + CallEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.callEffectCommandExecutor);
 		plugin.getCommand(COMMAND + HelpEffectCommandExecutor.COMMAND).setExecutor(this.helpEffectCommandExecutor);
+		plugin.getCommand(COMMAND + HelpEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.helpEffectCommandExecutor);
 		plugin.getCommand(COMMAND + ListEffectCommandExecutor.COMMAND).setExecutor(this.listEffectCommandExecutor);
+		plugin.getCommand(COMMAND + ListEffectCommandExecutor.SHORT_COMMAND).setExecutor(this.listEffectCommandExecutor);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

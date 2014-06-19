@@ -10,6 +10,9 @@
       eminfo:
         description: Retrieves informations on an existing effect.
         usage: /eminfo [<effectName>|<playerName>]
+      emi:
+        description: A shortcut for the eminfo command. Retrieves informations on an existing effect.
+        usage: /eminfo [<effectName>|<playerName>]
       emplayer:
         description: Manages the effects associated to a player.
         usage: /emplayer add | del | clear | details | list
@@ -25,9 +28,18 @@
       emcall:
         description: Call an effect directly
         usage: /emcall [<playerName> <effectName> | ( <playerName> | <effectName> )]
+      emc:
+        description: A shortcut for the emcall command. Call an effect directly
+        usage: /emcall [<playerName> <effectName> | ( <playerName> | <effectName> )]
       emhelp:
         description: Retrieves informations about how to use that plugin.
         usage: /emhelp <command>
+      emh:
+        description: A shortcut for the emhelp command. Retrieves informations about how to use that plugin.
+        usage: /emhelp <command>
       emlist:
         description: Retrieves a list of effect or a list of effect applied to a player
+        usage: /emlist [player]
+      eml:
+        description: A shortcut for the emlist command. Retrieves a list of effect or a list of effect applied to a player
         usage: /emlist [player]
